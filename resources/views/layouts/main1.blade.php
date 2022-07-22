@@ -10,16 +10,20 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+  {{-- Navbar --}}
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+      {{-- Navbar collapse --}}
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0 vstack">
           <li class="nav-item">
+            {{-- About --}}
             <a class="nav-link" aria-current="page" href="#">Über</a>
           </li>
+          {{-- Login --}}
           <li class="nav-item ms-auto login-button">
             <div class="nav-link" aria-current="page" href="/" class="login-button"><i class="fa-solid fa-user"></i></div>
           </li>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,22 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+
+// About
+Route::get('/about', function () {
+    return view('about.index');
+});
+
+// Settings
+Route::get('/settings', function () {
+    return view('settings.index');
+});
+
+// Admin
+Route::get('/admin', function () {
+    return view('admin.index');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -27,6 +27,7 @@ h1{
     padding-top: 20px;
 }
 
+
 #recipeButton{
     margin: 10px auto;
 }
@@ -61,4 +62,12 @@ p.settings{
 
 .show-block{
     display: block;
+}
+
+.table-settings{
+    margin-top: 30px;
+}
+
+.user-settings{
+    margin: 20px;
 }
