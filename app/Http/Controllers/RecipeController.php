@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Settings;
+use App\Models\Recipe;
 use Illuminate\Http\Request;
 
-class SettingsController extends Controller
+class RecipeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        $settings = Settings::all();
-        return view('settings.index', compact('settings'));
+        //
     }
 
     /**
@@ -42,10 +41,10 @@ class SettingsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Settings  $settings
+     * @param  \App\Models\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function show(Settings $settings)
+    public function show(Recipe $recipe)
     {
         //
     }
@@ -53,10 +52,10 @@ class SettingsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Settings  $settings
+     * @param  \App\Models\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function edit(Settings $settings)
+    public function edit(Recipe $recipe)
     {
         //
     }
@@ -65,10 +64,10 @@ class SettingsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Settings  $settings
+     * @param  \App\Models\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Settings $settings)
+    public function update(Request $request, Recipe $recipe)
     {
         //
     }
@@ -76,10 +75,10 @@ class SettingsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Settings  $settings
+     * @param  \App\Models\Recipe  $recipe
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Settings $settings)
+    public function destroy(Recipe $recipe)
     {
         //
     }

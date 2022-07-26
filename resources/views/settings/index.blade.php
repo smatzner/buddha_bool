@@ -46,9 +46,18 @@
           <td>15g</td>
           <td><button class="btn btn-sm btn-outline-secondary">ändern</button></td>
         </tr>
+        <tr>
+          <th scope="row"></th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><button class="btn btn-sm btn-outline-danger">hinzufügen</button></td>
+        </tr>
       </tbody>
-  </table>
-</div>
+    </table>
+  </div>
 
 <h5 class="m-3"><strong>Deine Einstellungen:</strong></h5>
 

@@ -19,7 +19,10 @@
         <p><strong>Energiegehalt: </strong>437kcal</p>
         <p><strong>Proteingehalt: </strong>56g</p>
         <p><strong>Fettgehalt: </strong>20g</p>
-        
+        <div>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Drucken</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Exportieren</button>
+        </div>
         
 
     </div>

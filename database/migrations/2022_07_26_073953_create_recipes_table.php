@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('recipes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
+            $table->boolean('is_bookmarked')->default(false);
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('recipes');
     }
 };
