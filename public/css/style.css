@@ -1,6 +1,22 @@
 *{
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
     font-family: monospace;
+}
+
+#wrapper{
+    padding: 20px 20px 20px 40px;
+}
+
+.table-settings{
+    max-width: 900px;
+}
+
+.form{
+    max-width: 900px;
+}
+
+.button{
+    margin: 20px 0;
 }
 
 .nav-link{
@@ -23,9 +39,9 @@
     transform: none;
 }
 
-h1{
+/* h1{
     padding-top: 20px;
-}
+} */
 
 
 #recipeButton{
@@ -64,9 +80,6 @@ p.settings{
     display: block;
 }
 
-.table-settings{
-    margin-top: 30px;
-}
 
 .user-settings{
     margin: 20px;

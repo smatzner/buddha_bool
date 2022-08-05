@@ -20,9 +20,20 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0 vstack">
           {{-- About --}}
+          @guest 
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/about">Über</a>
+            </li>
+          @endguest
+          {{-- User Overview --}}
+          @auth
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/about">Über</a>
+            <a class="nav-link" aria-current="page" href="/">Home</a>
           </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="{{route('user.index')}}">Benutzer</a>
+            </li>
+          @endauth
           {{-- Login --}}
           <li class="nav-item ms-auto login-button">
             <div class="nav-link" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -31,8 +42,19 @@
             {{-- Canvas Login --}}
             <div class="collapse" id="collapseExample">
               <div class="card card-body">
-                <a href="{{route('login')}}" class="nav-link">Login</a>
-                <a href="{{route('register')}}" class="nav-link">Register</a>
+                @auth
+                  <form action="{{ route('logout') }}" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-secondary">Logout</button>
+                  </form>
+                @else
+                  @if(Route::has('login'))
+                    <a href="{{ route('login') }}" class="btn btn-outline-secondary">Login</a>
+                  @endif
+                  @if(Route::has('register'))
+                    <a href="{{ route('register') }}" class="btn btn-outline-secondary">Register</a>
+                  @endif
+                @endauth
               </div>
             </div>
           </li>
@@ -42,7 +64,9 @@
   </nav>
 
   {{-- Content --}}
-  @yield('content')
+  <div id="wrapper" class="container-fluid">
+    @yield('content')
+  </div>
 
 
   {{-- <script src="/css/jquery/jquery-3.3.1.min.js"></script> --}}
