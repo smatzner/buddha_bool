@@ -91,7 +91,7 @@
 
   <script src="/css/bootstrap/js/bootstrap.min.js"></script>
   <script src="/js/jquery-3.6.0.min.js"></script>
-  {{-- <script src="/js/script.js"></script> --}}
+  <script src="/js/script.js"></script>
   <script src="/css/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://kit.fontawesome.com/b9181b3591.js" crossorigin="anonymous"></script>
 </body>
