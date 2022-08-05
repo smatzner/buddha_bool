@@ -56,4 +56,35 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'Benutzer '.$request->email.' wurde erfolgreich aktualisiert.');
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $user = User::find($id);
+        if(!$user){
+            $status = 404;
+            $msg = 'Benutzer nicht gefunden';
+        }
+        else{
+            // $user->delete();
+            $status = 200;
+            $msg = 'Benutzer '.$user->email.' wurde erfolgreich gelöscht';
+        }
+
+        //Aufruf per JavaScript
+        if( request()->ajax() ){
+            return response()->json(['status'=>$status,'msg'=>$msg],$status);
+        }
+
+        //Aufruf per HTML
+        if( $status == 404 ){
+            abort(404);
+        }
+
+        return redirect()->route('user.index')->with('success', $msg);
+    }
 }

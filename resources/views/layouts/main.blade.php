@@ -19,17 +19,17 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0 vstack">
+          {{-- User Overview --}}
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="/"><i class="fa-solid fa-bowl-food"></i></a>
+          </li>
           {{-- About --}}
           @guest 
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/about">Über</a>
-            </li>
-          @endguest
-          {{-- User Overview --}}
-          @auth
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/">Home</a>
+            <a class="nav-link" aria-current="page" href="/about">Über</a>
           </li>
+          @endguest
+          @auth
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="{{route('user.index')}}">Benutzer</a>
             </li>
@@ -37,7 +37,7 @@
           {{-- Login --}}
           <li class="nav-item ms-auto login-button">
             <div class="nav-link" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-              <i class="fa-solid fa-user"></i>
+              <i class="fa-solid fa-user"></i> {{-- TODO: wandert bei collapse nicht auf die Linke Seite --}}
             </div>
             {{-- Canvas Login --}}
             <div class="collapse" id="collapseExample">
@@ -68,9 +68,31 @@
     @yield('content')
   </div>
 
+  {{-- Modal --}}
 
-  {{-- <script src="/css/jquery/jquery-3.3.1.min.js"></script> --}}
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Löschen</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <script src="/css/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/js/jquery-3.6.0.min.js"></script>
+  {{-- <script src="/js/script.js"></script> --}}
+  <script src="/css/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="https://kit.fontawesome.com/b9181b3591.js" crossorigin="anonymous"></script>
 </body>
 </html>

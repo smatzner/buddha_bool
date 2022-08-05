@@ -38,8 +38,6 @@
                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse" @if ($user->is_admin) checked @endif name="is_admin">
             </div>
 
-
-
             <button type="submit" class="btn btn-dark">Speichern</button>
             {{-- TODO: Modal Fenster um Änderung zu bestätigen --}}
             {{-- TODO: Error Message auf Deutsch --}}

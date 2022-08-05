@@ -10,29 +10,35 @@
  <div class="alert alert-success">{{ session('success') }}</div>
  @endif
 
-  <table class="table table-hover table-settings">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Vorname</th>
-        <th>Nachname</th>
-        <th>E-Mail</th>
-        <th class="text-center">Admin</th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    @foreach ($users as $user)
-      <tr>
-        <th scope="row">{{$user->id}}</th>
-        <th>{{$user->first_name}}</th>
-        <th>{{$user->last_name}}</th> 
-        <th>{{$user->email}}</th>
-        <th class="text-center">@if ($user->is_admin) <i class="fa-solid fa-check"> @endif</th>
-        <th><a href="{{route('user.edit',$user->id)}}" class="btn btn-outline-secondary">Bearbeiten</a></th>
-        <th><a href="{{route('user.destroy',$user->id)}}" class="btn btn-outline-secondary">Löschen</a></th>
-      </tr>
-    @endforeach
-  </table>
+<table class="table table-hover table-settings">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Vorname</th>
+      <th>Nachname</th>
+      <th>E-Mail</th>
+      <th class="text-center">Admin</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  @foreach ($users as $user)
+    <tr>
+      <td scope="row">{{$user->id}}</td>
+      <td>{{$user->first_name}}</td>
+      <td>{{$user->last_name}}</td> 
+      <td>{{$user->email}}</td>
+      <td class="text-center">@if ($user->is_admin) <i class="fa-solid fa-check"> @endif</td>
+      <td><a href="{{route('user.edit',$user->id)}}" class="btn btn-outline-secondary">Bearbeiten</a></td>
+      <td>
+        <form action="{{route('user.destroy',$user->id)}}" method="POST" class="delete" data-title="{{$user->email}}" data-body="Wollen Sie den Benutzer <strong>{{$user->email}}</strong> löschen?" data-error="Benutzer nicht gefunden!">
+          @method('DELETE')
+          @csrf
+          <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" @if($user->is_admin) disabled @endif>Löschen</button>
+        </form>
+      </td>
+    </tr>
+  @endforeach
+</table>
 
 @endsection

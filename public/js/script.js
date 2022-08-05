@@ -7,6 +7,7 @@
             json[this.name] = this.value;
         });
         return JSON.stringify(json);
+
     }
 
     $('form.delete').on('submit',(e)=>{
