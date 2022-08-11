@@ -39,9 +39,10 @@
             </div>
 
             <button type="submit" class="btn btn-dark">Speichern</button>
+            {{-- TODO: Passworteingabe bei Admin-Änderung --}}
+            {{-- TODO: Admin-Änderung sperren, wenn nur 1 Admin vorhanden --}}
             {{-- TODO: Modal Fenster um Änderung zu bestätigen --}}
             {{-- TODO: Error Message auf Deutsch --}}
-            {{-- TODO: Passworteingabe bei Admin-Änderung --}}
         </form>
     </div>
 

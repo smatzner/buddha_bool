@@ -30,32 +30,20 @@
           </li>
           @endguest
           @auth
-          @can('is_admin')
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{{route('user.index')}}">Benutzer</a>
-          </li>
-          @endcan
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="{{route('user.index')}}">Benutzer</a>
+            </li>
           @endauth
           {{-- Login --}}
-          <li class="nav-item ms-lg-auto login-button">
-            <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" role="button" href="#offcanvasExample">
-              <i class="fa-solid fa-user"></i> 
-            </a>
-            <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-                @auth
-                  <form action="{{ route('logout') }}" method="post">
-                    @csrf
-                    <button type="submit" class="btn btn-outline-secondary">Logout</button>
-                  </form>
-                @else
-                  @if(Route::has('login'))
-                    <a href="{{ route('login') }}" class="btn btn-outline-secondary">Login</a>
-                  @endif
-                  @if(Route::has('register'))
-                    <a href="{{ route('register') }}" class="btn btn-outline-secondary">Register</a>
-                  @endif
-                @endauth
+          <a class="btn btn-primary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+            Link with href
+          </a>
+          <li class="nav-item ms-auto login-button">
+            <div class="nav-link" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+              <i class="fa-solid fa-user"></i> {{-- TODO: wandert bei collapse nicht auf die Linke Seite --}}
+            </div>
+            {{-- Canvas Login --}}
+
               </div>
             </div>
           </li>
@@ -69,7 +57,7 @@
     @yield('content')
   </div>
 
-  {{-- Modal Delete --}}
+  {{-- Modal --}}
   <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -88,27 +76,28 @@
     </div>
   </div>
 
-  {{-- Offcanvas Login --}}
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+    Button with data-bs-target
+  </button>
+  
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <div class="card card-body">
-        @auth
-          <form action="{{ route('logout') }}" method="post">
-            @csrf
-            <button type="submit" class="btn btn-outline-secondary">Logout</button>
-          </form>
-        @else
-          @if(Route::has('login'))
-            <a href="{{ route('login') }}" class="btn btn-outline-secondary">Login</a>
-          @endif
-          @if(Route::has('register'))
-            <a href="{{ route('register') }}" class="btn btn-outline-secondary">Register</a>
-          @endif
-        @endauth
+      <div>
+        Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
+      </div>
+      <div class="dropdown mt-3">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+          Dropdown button
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Action</a></li>
+          <li><a class="dropdown-item" href="#">Another action</a></li>
+          <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
       </div>
     </div>
   </div>

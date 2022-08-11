@@ -30,12 +30,11 @@ Route::get('/settings', function () {
 });
 
 Route::middleware('auth')->group(function () {
-    // User
-    Route::resource('/user', UserController::class);
+    Route::middleware('can:is_admin')->group(function(){
+        // User
+        Route::resource('/user', UserController::class);
+    });
 });
-
-// // User
-// Route::resource('/user', UserController::class);
 
 
 Auth::routes();

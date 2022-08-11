@@ -86,6 +86,6 @@
   </script>
   {{-- <script src="/css/jquery/jquery-3.3.1.min.js"></script> --}}
   <script src="/css/bootstrap/js/bootstrap.min.js"></script>
-  <script src="https://kit.fontawesome.com/b9181b3591.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/b9181b3591.js" crossorigin="anonymous"></script> {{-- TODO: herunterladen und einbiden wegen DSVGO --}}
 </body>
 </html>

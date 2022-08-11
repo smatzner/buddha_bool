@@ -81,3 +81,7 @@ p.settings{
 .user-settings{
     margin: 20px;
 }
+
+.offcanvas{
+    max-width: 300px;
+}

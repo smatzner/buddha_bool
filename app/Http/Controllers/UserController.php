@@ -70,7 +70,7 @@ class UserController extends Controller
             $msg = 'Benutzer nicht gefunden';
         }
         else{
-            // $user->delete();
+            $user->delete();
             $status = 200;
             $msg = 'Benutzer '.$user->email.' wurde erfolgreich gelöscht';
         }
