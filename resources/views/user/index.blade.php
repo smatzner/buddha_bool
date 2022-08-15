@@ -34,7 +34,7 @@
         <form action="{{route('user.destroy',$user->id)}}" method="POST" class="delete" data-title="{{$user->email}}" data-body="Wollen Sie den Benutzer <strong>{{$user->email}}</strong> löschen?" data-error="Benutzer nicht gefunden!">
           @method('DELETE')
           @csrf
-          <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" @if($user->is_admin) disabled @endif>Löschen</button>
+          <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" @if($user->is_admin) disabled @endif>Löschen</button> {{-- TODO: Validation im Controller hinzufügen --}}
         </form>
       </td>
     </tr>

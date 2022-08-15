@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,8 @@ Route::middleware('auth')->group(function () {
         // User
         Route::resource('/user', UserController::class);
     });
+
+    Route::resource('/ingredient', IngredientController::class);
 });
 
 

@@ -19,7 +19,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mb-2 mb-lg-0 vstack">
-          {{-- User Overview --}}
+          {{-- Home --}}
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="/"><i class="fa-solid fa-bowl-food"></i></a>
           </li>
@@ -29,12 +29,19 @@
             <a class="nav-link" aria-current="page" href="/about">Über</a>
           </li>
           @endguest
+          {{-- Users --}}
           @auth
           @can('is_admin')
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="{{route('user.index')}}">Benutzer</a>
           </li>
           @endcan
+          @endauth
+          {{-- Ingredients --}}
+          @auth
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{{route('ingredient.index')}}">Zutaten</a>
+          </li>
           @endauth
           {{-- Login --}}
           <li class="nav-item ms-lg-auto login-button">
@@ -89,6 +96,7 @@
   </div>
 
   {{-- Offcanvas Login --}}
+  {{-- FIXME: 2x Klick auf body --}}
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasRightLabel">Offcanvas right</h5>

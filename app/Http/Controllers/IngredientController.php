@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        //
+        $ingredients = Ingredient::with('category:id,title')->get();
+        return view('ingredient.index', compact('ingredients'));
     }
 
     /**
@@ -24,7 +26,8 @@ class IngredientController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::select('id', 'title')->get();
+        return view('ingredient.create', compact('categories'));
     }
 
     /**
@@ -35,7 +38,28 @@ class IngredientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:2',
+            'category_id' => 'required|exists:categories,id',
+            'energy' => 'required|numeric',
+            'protein' => 'required|numeric',
+            'carbohydrate' => 'required|numeric',
+            'fat' => 'required|numeric',
+        ]);
+
+        $ingredient = new Ingredient();
+        $ingredient->title = $request->title;
+        $ingredient->category_id = $request->category_id;
+        $ingredient->energy = $request->energy;
+        $ingredient->protein = $request->protein;
+        $ingredient->carbohydrate = $request->carbohydrate;
+        $ingredient->fat = $request->fat;
+        $ingredient->vgn = $request->has('vgn');
+        $ingredient->veg = $request->has('veg');
+        $ingredient->gf = $request->has('gf');
+        $ingredient->save();
+
+        return redirect()->route('ingredient.index')->with('success', 'Die Zutat '.$ingredient->title.' wurde erfolgreich erstellt.');
     }
 
     /**
@@ -57,7 +81,8 @@ class IngredientController extends Controller
      */
     public function edit(Ingredient $ingredient)
     {
-        //
+        $categories = Category::select('id', 'title')->get();
+        return view('ingredient.edit', compact('ingredient', 'categories'));
     }
 
     /**
@@ -69,7 +94,27 @@ class IngredientController extends Controller
      */
     public function update(Request $request, Ingredient $ingredient)
     {
-        //
+        $request->validate([
+            'title' => 'required|min:2',
+            'category_id' => 'required|exists:categories,id',
+            'energy' => 'required|numeric',
+            'protein' => 'required|numeric',
+            'carbohydrate' => 'required|numeric',
+            'fat' => 'required|numeric',
+        ]);
+
+        $ingredient->title = $request->title;
+        $ingredient->category_id = $request->category_id;
+        $ingredient->energy = $request->energy;
+        $ingredient->protein = $request->protein;
+        $ingredient->carbohydrate = $request->carbohydrate;
+        $ingredient->fat = $request->fat;
+        $ingredient->vgn = $request->has('vgn');
+        $ingredient->veg = $request->has('veg');
+        $ingredient->gf = $request->has('gf');
+        $ingredient->save();
+        
+        return redirect()->route('ingredient.index')->with('success', 'Zutat '.$request->title.' wurde erfolgreich aktualisiert.');
     }
 
     /**
@@ -80,6 +125,30 @@ class IngredientController extends Controller
      */
     public function destroy(Ingredient $ingredient)
     {
-        //
+        $ingredient = Ingredient::find($ingredient->id);
+        if(!$ingredient){
+            $status = 404;
+            $msg = 'Zutat nicht gefunden.';
+        }
+        else{
+            $ingredient->delete();
+            $status = 200;
+            $msg = 'Zutat '.$ingredient->title.' wurde erfolgreich gelöscht.';
+        }
+
+        // Aufruf per JavaScript
+        if(request()->ajax()){
+            return response()->json([
+                'status' => $status,
+                'msg' => $msg
+            ], $status);
+        }
+
+        // Aufruf per HTML
+        if($status == 404){
+            abort(404);
+        }
+
+        return redirect()->route('ingredient.index')->with('success', $msg);
     }
 }
