@@ -47,7 +47,6 @@ class UserController extends Controller
 
         if($request->is_admin == "on"){
             $user->is_admin = 1;
-            dump($request->is_admin);
         } else {
             $user->is_admin = 0;
         }
@@ -68,6 +67,10 @@ class UserController extends Controller
         if(!$user){
             $status = 404;
             $msg = 'Benutzer nicht gefunden';
+        }
+        elseif($user->is_admin == 1){
+            $status = 403;
+            $msg = 'Admin Benutzer können nicht gelöscht werden';
         }
         else{
             $user->delete();
