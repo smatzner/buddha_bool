@@ -31,12 +31,18 @@ Route::get('/settings', function () {
 });
 
 Route::middleware('auth')->group(function () {
+    // Users
     Route::middleware('can:is_admin')->group(function(){
-        // User
         Route::resource('/user', UserController::class);
     });
 
-    Route::resource('/ingredient', IngredientController::class);
+    // Ingredients
+    Route::middleware('can:is_admin')->group(function(){
+        Route::resource('/ingredient', IngredientController::class);
+    });
+    Route::resource('/ingredient', IngredientController::class)->except('create','edit', 'update', 'destroy',);
+
+    
 });
 
 

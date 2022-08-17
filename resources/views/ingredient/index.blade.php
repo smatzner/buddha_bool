@@ -23,8 +23,6 @@
       <th class="text-center">Vegan</th>
       <th class="text-center">Vegetarisch</th>
       <th class="text-center">Glutenfrei</th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
   @foreach ($ingredients as $ingredient)
@@ -39,6 +37,7 @@
       <td class="text-center">@if ($ingredient->vgn) <i class="fa-solid fa-check"> @endif</td>
       <td class="text-center">@if ($ingredient->veg) <i class="fa-solid fa-check"> @endif</td>
       <td class="text-center">@if ($ingredient->gf) <i class="fa-solid fa-check"> @endif</td>
+      @can('is_admin')
       <td><a href="{{route('ingredient.edit',$ingredient->id)}}" class="btn btn-outline-secondary">Bearbeiten</a></td>
       <td>
         <form action="{{route('ingredient.destroy',$ingredient->id)}}" method="POST" class="delete" data-title="{{$ingredient->email}}" data-body="Wollen Sie die Zutat <strong>{{$ingredient->title}}</strong> löschen?" data-error="Benutzer nicht gefunden!">
@@ -47,6 +46,7 @@
           <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Löschen</button>
         </form>
       </td>
+      @endcan
     </tr>
   @endforeach
 </table>
