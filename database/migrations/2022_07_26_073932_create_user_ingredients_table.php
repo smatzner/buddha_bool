@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('user_ingredients', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id');
+            $table->foreignId('user_id');
             $table->integer('energy');
             $table->integer('protein');
             $table->integer('carbohydrate');

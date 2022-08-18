@@ -40,9 +40,12 @@ Route::middleware('auth')->group(function () {
     Route::middleware('can:is_admin')->group(function(){
         Route::resource('/ingredient', IngredientController::class);
     });
-    Route::resource('/ingredient', IngredientController::class)->except('create','edit', 'update', 'destroy',);
+    Route::resource('/ingredient', IngredientController::class)->except('create','edit', 'update', 'destroy');
 
     
+
+
+
 });
 
 

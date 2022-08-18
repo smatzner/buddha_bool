@@ -31,4 +31,10 @@ class Ingredient extends Model
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
+
+    public function userIngredients()
+    {
+        return $this->belongsToMany(UserIngredient::class, 'ingredient_user_ingredient', 'ingredient_id', 'user_ingredient_id');
+    }
+
 }

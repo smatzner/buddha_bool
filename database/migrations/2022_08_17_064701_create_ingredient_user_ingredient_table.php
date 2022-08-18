@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('ingredient_user_ingredient', function (Blueprint $table) {
             $table->foreignId('ingredient_id');
-            $table->foreignId('user_ingrejdient_id');
+            $table->foreignId('user_ingredient_id');
 
             $table->foreign('ingredient_id')->on('ingredients')->references('id')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_ingredient_id')->on('user_ingredients')->references('id')->onDelete('cascade')->onUpdate('cascade');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Ingredient;
+use App\Models\UserIngredient;
 use Illuminate\Http\Request;
 
 class IngredientController extends Controller
@@ -16,7 +17,8 @@ class IngredientController extends Controller
     public function index()
     {
         $ingredients = Ingredient::with('category:id,title')->get();
-        return view('ingredient.index', compact('ingredients'));
+        $userIngredients = UserIngredient::with('category:id,title')->get();
+        return view('ingredient.index', compact('ingredients', 'userIngredients'));
     }
 
     /**
@@ -60,7 +62,11 @@ class IngredientController extends Controller
         $ingredient->save();
 
         return redirect()->route('ingredient.index')->with('success', 'Die Zutat '.$ingredient->title.' wurde erfolgreich erstellt.');
+
+        $userIngredient = new UserIngredient();
     }
+
+    
 
     /**
      * Display the specified resource.

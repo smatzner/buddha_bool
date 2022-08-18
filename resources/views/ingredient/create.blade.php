@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('pageTitle','Neue Zutat')
+@section('pageTitle','Zutat hinzufügen')
 
 @section('content')
     <h1>Neue Zutat hinzufügen</h1>

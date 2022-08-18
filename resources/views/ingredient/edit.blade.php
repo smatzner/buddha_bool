@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('pageTitle','Benutzer')
+@section('pageTitle','Zutat ändern')
 
 @section('content')
     <h1>Zutat {{$ingredient->title}} ändern</h1>

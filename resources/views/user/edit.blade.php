@@ -1,9 +1,9 @@
 @extends('layouts.main')
 
-@section('pageTitle','Benutzer')
+@section('pageTitle','Benutzer ändern')
 
 @section('content')
-    <h1>User {{$user->email}} ändern</h1>
+    <h1>Benutzer {{$user->email}} ändern</h1>
     <div class="button"><a href="{{route('user.index')}}" class="btn btn-outline-secondary">Alle Benutzer</a></div>
 
     @if (session('error'))
