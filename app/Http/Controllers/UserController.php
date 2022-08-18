@@ -51,6 +51,11 @@ class UserController extends Controller
             $user->is_admin = 0;
         }
 
+        $adminCount = User::where('is_admin', 1)->count();
+        if($adminCount == 1 && $user->is_admin == 0){
+            return redirect()->back()->with('error', 'Es muss mindestens ein Admin-Benutzer vorhanden sein!');
+        }
+
         $user->update($request->all());
         return redirect()->route('user.index')->with('success', 'Benutzer '.$request->email.' wurde erfolgreich aktualisiert.');
     }
