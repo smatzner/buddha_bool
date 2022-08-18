@@ -31,10 +31,10 @@
       <td class="text-center">@if ($user->is_admin) <i class="fa-solid fa-check"> @endif</td>
       <td><a href="{{route('user.edit',$user->id)}}" class="btn btn-outline-secondary">Bearbeiten</a></td>
       <td>
-        <form action="{{route('user.destroy',$user->id)}}" method="POST" class="delete" data-title="{{$user->email}}" data-body="Wollen Sie den Benutzer <strong>{{$user->email}}</strong> löschen?" data-error="Benutzer nicht gefunden!">
+        <form action="{{route('user.destroy',$user->id)}}" method="POST" class="delete" data-title="{{$user->email}}" data-body="Wollen Sie den Benutzer <strong>{{$user->email}}</strong> löschen?" data-error="@if ($user->is_admin) Admin Benutzer können nicht gelöscht werden! @else Benutzer nicht gefunden! @endif">
           @method('DELETE')
           @csrf
-          <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" @if($user->is_admin) disabled @endif>Löschen</button> {{-- TODO: Validation im Controller hinzufügen --}}
+          <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" @if($user->is_admin) disabled @endif>Löschen</button>
         </form>
       </td>
     </tr>
