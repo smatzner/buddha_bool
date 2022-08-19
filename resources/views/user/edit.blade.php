@@ -45,8 +45,7 @@
 
             <button type="submit" class="btn btn-dark">Speichern</button>
             {{-- TODO: Passworteingabe bei Admin-Änderung --}}
-            {{-- TODO: Modal Fenster um Änderung zu bestätigen --}}
-            {{-- FIXME: Änderung speichern nicht möglich, weil immer die Admin-Fehlermeldung kommt - auch bei Usern --}}
+            {{-- TODO: Modal Fenster um Änderung zu bestätigen - notwendig? --}}
         </form>
     </div>
 
