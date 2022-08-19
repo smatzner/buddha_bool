@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -46,16 +47,16 @@ class UserController extends Controller
             'email' => 'required|email:filter,dns',
         ]);
 
-        if($request->is_admin == "on"){
-            $user->is_admin = 1;
-        } else {
-            $user->is_admin = 0;
+        $adminCount = User::where('is_admin', 1)->count();
+        if($user->is_admin && $adminCount == 1 && !$request->has('is_admin')) {
+            return redirect()->back()->with('error', 'Es muss mindestens ein Admin-Benutzer vorhanden sein.');
         }
 
-        $adminCount = User::where('is_admin', 1)->count();
-        if($adminCount == 1 && $user->is_admin == 0){
-            return redirect()->back()->with('error', 'Es muss mindestens ein Admin-Benutzer vorhanden sein!');
-        }
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->is_admin = $request->has('is_admin');
+        $user->save();
 
         $user->update($request->all());
         return redirect()->route('user.index')->with('success', 'Benutzer '.$request->email.' wurde erfolgreich aktualisiert.');
