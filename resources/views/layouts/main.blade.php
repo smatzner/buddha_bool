@@ -126,6 +126,6 @@
   <script src="/js/jquery-3.6.0.min.js"></script>
   <script src="/js/script.js"></script>
   <script src="/css/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="https://kit.fontawesome.com/b9181b3591.js" crossorigin="anonymous"></script> {{-- TODO: herunterladen und einbinden wegen DSGVO --}}
+  <script src="/js/fontawesome.js"></script>
 </body>
 </html>
