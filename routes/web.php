@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::resource('/ingredient', IngredientController::class)->except('create','edit', 'update', 'destroy');
 
-    
+    // Route::get('/user-ingredient');
 
 
 

@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ingredient_user_ingredient', function (Blueprint $table) {
+        Schema::create('ingredient_user', function (Blueprint $table) {
             $table->foreignId('ingredient_id');
-            $table->foreignId('user_ingredient_id');
+            $table->foreignId('user_id');
 
             $table->foreign('ingredient_id')->on('ingredients')->references('id')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('user_ingredient_id')->on('user_ingredients')->references('id')->onDelete('cascade')->onUpdate('cascade');
-            $table->primary(['ingredient_id', 'user_ingredient_id'],'ingredient_user_ingredient_primary');
+            $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade')->onUpdate('cascade');
+            $table->primary(['ingredient_id', 'user_id']);
         });
     }
 
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ingredient_user_ingredient');
+        Schema::dropIfExists('ingredient_user');
     }
 };

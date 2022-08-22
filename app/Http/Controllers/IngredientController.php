@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Ingredient;
 use App\Models\UserIngredient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IngredientController extends Controller
 {
@@ -16,6 +17,14 @@ class IngredientController extends Controller
      */
     public function index()
     {
+        /* 
+        if(Auth::user()->is_admin == 1){
+            $ingredients = Ingredient::with('category:id,title')->where('user_id',null)->get();
+        }
+        else {
+            $ingredients = Ingredient::with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->get();
+        }
+        */
         $ingredients = Ingredient::with('category:id,title')->get();
         $userIngredients = UserIngredient::with('category:id,title')->get();
         return view('ingredient.index', compact('ingredients', 'userIngredients'));
@@ -59,11 +68,10 @@ class IngredientController extends Controller
         $ingredient->vgn = $request->has('vgn');
         $ingredient->veg = $request->has('veg');
         $ingredient->gf = $request->has('gf');
+        // TODO: user_id einfügen (if is_admin ...)
         $ingredient->save();
 
         return redirect()->route('ingredient.index')->with('success', 'Die Zutat '.$ingredient->title.' wurde erfolgreich erstellt.');
-
-        $userIngredient = new UserIngredient();
     }
 
     

@@ -27,5 +27,7 @@ class IngredientsTableSeeder extends Seeder
 
         DB::table('ingredients')->insert($ingredients);
     }
+
+    
     
 }
