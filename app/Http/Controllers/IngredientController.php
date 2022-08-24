@@ -17,17 +17,15 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        /* 
+        
         if(Auth::user()->is_admin == 1){
             $ingredients = Ingredient::with('category:id,title')->where('user_id',null)->get();
         }
         else {
-            $ingredients = Ingredient::with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->get();
+            $ingredients = Ingredient::with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->get();
         }
-        */
-        $ingredients = Ingredient::with('category:id,title')->get();
-        $userIngredients = UserIngredient::with('category:id,title')->get();
-        return view('ingredient.index', compact('ingredients', 'userIngredients'));
+       
+        return view('ingredient.index', compact('ingredients'));
     }
 
     /**
@@ -39,6 +37,7 @@ class IngredientController extends Controller
     {
         $categories = Category::select('id', 'title')->get();
         return view('ingredient.create', compact('categories'));
+        //TODO: user / admin unterscheidung
     }
 
     /**
@@ -68,7 +67,9 @@ class IngredientController extends Controller
         $ingredient->vgn = $request->has('vgn');
         $ingredient->veg = $request->has('veg');
         $ingredient->gf = $request->has('gf');
-        // TODO: user_id einfügen (if is_admin ...)
+        if(!auth()->user()->is_admin){
+            $ingredient->user_id = auth()->user()->id;
+        }
         $ingredient->save();
 
         return redirect()->route('ingredient.index')->with('success', 'Die Zutat '.$ingredient->title.' wurde erfolgreich erstellt.');

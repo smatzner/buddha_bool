@@ -13,7 +13,6 @@
 <table class="table table-hover table-settings">
   <thead>
     <tr>
-      <th>#</th>
       <th>Name</th>
       <th>Kategorie</th>
       <th class="text-center">Energie</th>
@@ -25,30 +24,11 @@
       <th class="text-center">Glutenfrei</th>
     </tr>
   </thead>
-  @can('is_user')
-  @foreach ($userIngredients as $userIngredient)
-  @if ($userIngredient->user_id == auth()->user()->id)
-  <tr class="table-warning">
-    <td scope="row">{{$userIngredient->id}}</td>
-    <td>{{$userIngredient->title}}</td> 
-    <td>{{$userIngredient->category->title}}</td>
-    <td class="text-center">{{$userIngredient->energy}}kcal</td>
-    <td class="text-center">{{$userIngredient->protein}}g</td>
-    <td class="text-center">{{$userIngredient->carbohydrate}}g</td>
-    <td class="text-center">{{$userIngredient->fat}}g</td>
-    <td class="text-center">@if ($userIngredient->vgn) <i class="fa-solid fa-check"> @endif</td>
-    <td class="text-center">@if ($userIngredient->veg) <i class="fa-solid fa-check"> @endif</td>
-    <td class="text-center">@if ($userIngredient->gf) <i class="fa-solid fa-check"> @endif</td>
-    <td><a href="" class="btn btn-outline-secondary">Bearbeiten</a></td>
-    <td><button type="submit" class="btn btn-outline-danger">Löschen</button></td>
-  </tr>   
-  @endif
-  @endforeach
-  @endcan
   @foreach ($ingredients as $ingredient)
-  <tr>
-    <td scope="row">{{$ingredient->id}}</td>
-    <td>{{$ingredient->title}}</td> 
+  <tr @if (auth()->user()->id == $ingredient->user_id)
+      class="table-warning"
+  @endif>
+    <td scope="row">{{$ingredient->title}}</td> 
     <td>{{$ingredient->category->title}}</td>
     <td class="text-center">{{$ingredient->energy}}kcal</td>
     <td class="text-center">{{$ingredient->protein}}g</td>
@@ -57,31 +37,30 @@
     <td class="text-center">@if ($ingredient->vgn) <i class="fa-solid fa-check"> @endif</td>
     <td class="text-center">@if ($ingredient->veg) <i class="fa-solid fa-check"> @endif</td>
     <td class="text-center">@if ($ingredient->gf) <i class="fa-solid fa-check"> @endif</td>
-    @can('is_admin')
+    @if (($ingredient->user_id == auth()->user()->id)||(auth()->user()->is_admin == 1 && !$ingredient->user_id))
     <td><a href="{{route('ingredient.edit',$ingredient->id)}}" class="btn btn-outline-secondary">Bearbeiten</a></td>
     <td>
-      <form action="{{route('ingredient.destroy',$ingredient->id)}}" method="POST" class="delete" data-title="{{$ingredient->email}}" data-body="Wollen Sie die Zutat <strong>{{$ingredient->title}}</strong> löschen?" data-error="Zutat nicht gefunden!">
+      <form action="{{route('ingredient.destroy',$ingredient->id)}}" method="POST" class="delete" data-title="{{$ingredient->title}}" data-body="Wollen Sie die Zutat <strong>{{$ingredient->title}}</strong> löschen?" data-error="Zutat nicht gefunden!">
         @method('DELETE')
         @csrf
         <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Löschen</button>
       </form>
     </td>
-    @endcan
-    @can('is_user')
+    @endif
+    @if ((!auth()->user()->is_admin) && (!$ingredient->user_id))
     <td><a href="" class="btn btn-outline-danger">Sperren</a></td>
-    <td></td>
-    @endcan
+    <td></td> 
+    @endif
   </tr>
   @endforeach
 </table>
 
-@can('is_admin')
-  <div class="button"><a href="{{route('ingredient.create')}}" class="btn btn-outline-secondary">Zutat hinzufügen</a></div>  
-@endcan
 
-@can('is_user')
+  <div class="button"><a href="{{route('ingredient.create')}}" class="btn btn-outline-secondary">Zutat hinzufügen</a></div>  
+
+{{-- @can('is_user')
   <div class="button"><a href="" class="btn btn-outline-secondary">Zutat hinzufügen</a></div>
 @endcan
-
+ --}}
 
 @endsection
