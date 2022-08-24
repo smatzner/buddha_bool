@@ -7,7 +7,7 @@
  * @param   int  $ingredient_id
  * @param   int  $user_id        logged in user auth()->user()->id
  *
- * @return  [type]                  [return description]
+ * @return  bool                  [return description]
  */
 function lockedIngredients ($ingredient,int $ingredient_id,int $user_id){ 
 
@@ -16,4 +16,32 @@ function lockedIngredients ($ingredient,int $ingredient_id,int $user_id){
             return true;
         }
     }
+}
+
+function csvToArray($filename='', $delimiter=',')
+{
+    if(!file_exists($filename) || !is_readable($filename))
+        return FALSE;
+
+    $header = null;
+    $data = array();
+    if (($handle = fopen($filename, 'r')) !== FALSE)
+    {
+        while (($row = fgetcsv($handle, 0, $delimiter)) !== FALSE)
+        {
+
+            if(!$header)
+            {
+            $header = $row;
+            }
+            else
+            {
+                if(count($header)!=count($row)){ continue; }
+
+                $data[] = array_combine($header, $row);
+            }
+        }
+        fclose($handle);
+    }
+    return ($data);
 }

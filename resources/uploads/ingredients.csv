@@ -1,0 +1,13 @@
+category_id;title;energy;protein;carbohydrate;fat;vgn;veg;gf
+1;Blattspinat;23;3;4;0;1;1;1
+2;Brokkoli;34;3;7;0;1;1;1
+3;Sükartoffeln;86;2;20;0;1;1;1
+4;Hühnerbrust;263;15;15;16;0;0;1
+5;Avocado;167;2;9;15;1;1;1
+6;Heidelbeeren;57;1;15;0;1;1;1
+7;Hummus;177;5;20;9;1;1;1
+3;Kartoffeln;58;3;12;0;1;1;1
+3;Quinoa;368;14;64;6;1;1;1
+3;Hirse;378;11;73;4;1;1;1
+3;Reis;358;7;79;1;1;1;1
+3;Vollkornreis;357;3;23;1;1;1;1
