@@ -32,9 +32,9 @@ class Ingredient extends Model
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function userIngredients()
+    public function lockedIngredients()
     {
-        return $this->belongsToMany(UserIngredient::class, 'ingredient_user_ingredient', 'ingredient_id', 'user_ingredient_id');
+        return $this->belongsToMany(User::class,'ingredient_user','ingredient_id','user_id','id','id');
     }
 
 }

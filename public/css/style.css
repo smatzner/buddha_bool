@@ -85,3 +85,7 @@ p.settings{
 .offcanvas{
     max-width: 300px;
 }
+
+.table-light{
+    color: rgb(150, 150, 150);
+}

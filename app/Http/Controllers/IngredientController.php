@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Ingredient;
-use App\Models\UserIngredient;
+use App\Models\IngredientUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,9 +22,9 @@ class IngredientController extends Controller
             $ingredients = Ingredient::with('category:id,title')->where('user_id',null)->get();
         }
         else {
-            $ingredients = Ingredient::with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->get();
+            $ingredients = Ingredient::with('lockedIngredients')->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->get();
         }
-       
+
         return view('ingredient.index', compact('ingredients'));
     }
 
@@ -165,5 +165,12 @@ class IngredientController extends Controller
         }
 
         return redirect()->route('ingredient.index')->with('success', $msg);
+    }
+
+    public function lock(Request $request, Ingredient $ingredient){
+        $ingredient = Ingredient::find($ingredient->id);
+        $ingredient->lockedIngredients()->toggle(auth()->user()->id);
+
+        return redirect()->route('ingredient.index');
     }
 }

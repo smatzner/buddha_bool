@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\UserController;
+use App\Models\Ingredient;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,8 @@ Route::middleware('auth')->group(function () {
     // Route::middleware('can:is_admin')->group(function(){
     //     Route::resource('/ingredient', IngredientController::class);
     // });
+    // Route::post('/ingredient/{ingredient}/',[IngredientController::class,'lock'])->name('ingredient.lock');
+    Route::put('/ingredient/lock/{ingredient}',[IngredientController::class,'lock'])->name('ingredient.lock');
     Route::resource('/ingredient', IngredientController::class);
 
 

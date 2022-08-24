@@ -9,6 +9,8 @@
  @if( session('success') )
  <div class="alert alert-success">{{ session('success') }}</div>
  @endif
+ 
+ User_ID: {{auth()->user()->id}} {{-- TODO: Helper rausnehmen --}}
 
 <table class="table table-hover table-settings">
   <thead>
@@ -25,9 +27,8 @@
     </tr>
   </thead>
   @foreach ($ingredients as $ingredient)
-  <tr @if (auth()->user()->id == $ingredient->user_id)
-      class="table-warning"
-  @endif>
+  <tr @if (auth()->user()->id == $ingredient->user_id) class="table-warning"  @endif
+      @if (lockedIngredients($ingredient,$ingredient->id,auth()->user()->id)) class="table-light" @endif>
     <td scope="row">{{$ingredient->title}}</td> 
     <td>{{$ingredient->category->title}}</td>
     <td class="text-center">{{$ingredient->energy}}kcal</td>
@@ -48,19 +49,28 @@
     </td>
     @endif
     @if ((!auth()->user()->is_admin) && (!$ingredient->user_id))
-    <td><a href="" class="btn btn-outline-danger">Sperren</a></td>
-    <td></td> 
+    <td colspan="2">
+      @if(lockedIngredients($ingredient,$ingredient->id,auth()->user()->id))
+      <form action="{{route('ingredient.lock',$ingredient->id)}}" method="POST">
+        @method('PUT')
+        @csrf
+        <button type="submit" class="btn btn-outline-danger">Entsperren</button>
+      </form>
+      @else
+      <form action="{{route('ingredient.lock',$ingredient->id)}}" method="POST">
+        @method('PUT')
+        @csrf
+        <button type="submit" class="btn btn-outline-danger">Sperren</button>
+      </form>
+      @endif
+    </td>
     @endif
   </tr>
   @endforeach
 </table>
 
 
-  <div class="button"><a href="{{route('ingredient.create')}}" class="btn btn-outline-secondary">Zutat hinzufügen</a></div>  
+<div class="button"><a href="{{route('ingredient.create')}}" class="btn btn-outline-secondary">Zutat hinzufügen</a></div>  
 
-{{-- @can('is_user')
-  <div class="button"><a href="" class="btn btn-outline-secondary">Zutat hinzufügen</a></div>
-@endcan
- --}}
 
 @endsection
