@@ -26,11 +26,6 @@ Route::get('/about', function () {
     return view('about.index');
 });
 
-// Settings
-Route::get('/settings', function () {
-    return view('settings.index');
-});
-
 Route::middleware('auth')->group(function () {
     // Users
     Route::middleware('can:is_admin')->group(function(){
@@ -38,19 +33,9 @@ Route::middleware('auth')->group(function () {
     });
 
     // Ingredients
-    // Route::middleware('can:is_admin')->group(function(){
-    //     Route::resource('/ingredient', IngredientController::class);
-    // });
-    // Route::post('/ingredient/{ingredient}/',[IngredientController::class,'lock'])->name('ingredient.lock');
     Route::put('/ingredient/lock/{ingredient}',[IngredientController::class,'lock'])->name('ingredient.lock');
     Route::resource('/ingredient', IngredientController::class);
-
-
-
-
-
 });
-
 
 Auth::routes();
 

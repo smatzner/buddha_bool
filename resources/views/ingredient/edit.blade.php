@@ -78,6 +78,11 @@
                 <label class="form-check-label" for="flexSwitchCheckReverse">Glutenfrei</label>
                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse" @if ($ingredient->gf) checked @endif name="gf">
             </div>
+            {{-- Personal ingredient --}}
+            <div class="form-check form-switch form-check-reverse">
+                <label class="form-check-label" for="flexSwitchCheckReverse">persönliche Zutat</label>
+                <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse" name="personal" {{$ingredient->user_id ? 'checked' : ''}}>
+            </div>
 
             <button type="submit" class="btn btn-dark">Speichern</button>
         </form>

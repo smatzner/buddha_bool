@@ -19,7 +19,7 @@ class IngredientController extends Controller
     {
         
         if(Auth::user()->is_admin == 1){
-            $ingredients = Ingredient::with('category:id,title')->where('user_id',null)->get();
+            $ingredients = Ingredient::with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->get();
         }
         else {
             $ingredients = Ingredient::with('lockedIngredients')->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->get();
@@ -67,7 +67,7 @@ class IngredientController extends Controller
         $ingredient->vgn = $request->has('vgn');
         $ingredient->veg = $request->has('veg');
         $ingredient->gf = $request->has('gf');
-        if(!auth()->user()->is_admin){
+        if(!auth()->user()->is_admin || $request->has('personal')){
             $ingredient->user_id = auth()->user()->id;
         }
         $ingredient->save();
@@ -135,6 +135,12 @@ class IngredientController extends Controller
         $ingredient->vgn = $request->has('vgn');
         $ingredient->veg = $request->has('veg');
         $ingredient->gf = $request->has('gf');
+        if($request->has('personal')){
+            $ingredient->user_id = auth()->user()->id;
+        }
+        else{
+            $ingredient->user_id = NULL;
+        }
         $ingredient->save();
         
         return redirect()->route('ingredient.index')->with('success', 'Zutat '.$request->title.' wurde erfolgreich aktualisiert.');

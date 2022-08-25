@@ -3,27 +3,30 @@
 @section('pageTitle','Buddha Bool')
     
 @section('content')
+
     
+
 <div class="center-content">
     <h1 class="h1">The Buddha Bool</h1>
     <div class="wrapper-recipe">
         <h6>Dein Rezept für <input type="number" name="" id="" value="1" size="4"> Person:</h6>
-        <p><strong>Salatbasis: </strong>Blattspinat</p> 
-        <p><strong>Kohlenhyderate: </strong>Süßkartoffel</p> 
-        <p><strong>Gemüse: </strong>Brokkoli</p> 
-        <p><strong>Proteinquelle: </strong>Hühnerbrust</p>
-        <p><strong>Fette: </strong>Avocado</p>
-        <p><strong>Früchte: </strong>Heidelbeeren</p>
-        <p><strong>Topping: </strong>Hummus</p>
-        <p>&nbsp</p>
-        <p><strong>Energiegehalt: </strong>437kcal</p>
-        <p><strong>Proteingehalt: </strong>56g</p>
-        <p><strong>Fettgehalt: </strong>20g</p>
-        <div>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Drucken</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Exportieren</button>
-        </div>
-        
+        <form action="">
+            <p><strong>Salatbasis: </strong>Blattspinat</p> 
+            <p><strong>Kohlenhyderate: </strong>Süßkartoffel</p> 
+            <p><strong>Gemüse: </strong>Brokkoli</p> 
+            <p><strong>Proteinquelle: </strong>Hühnerbrust</p>
+            <p><strong>Fette: </strong>Avocado</p>
+            <p><strong>Früchte: </strong>Heidelbeeren</p>
+            <p><strong>Topping: </strong>Hummus</p>
+            <p>&nbsp</p>
+            <p><strong>Energiegehalt: </strong>437kcal</p>
+            <p><strong>Proteingehalt: </strong>56g</p>
+            <p><strong>Fettgehalt: </strong>20g</p>
+            <div>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Drucken</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Exportieren</button>
+            </div>
+        </form>
 
     </div>
     <button id="recipeButton" class="btn btn-secondary" onclick="myClick()">Ein Rezept generieren</button>
