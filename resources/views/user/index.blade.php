@@ -20,6 +20,7 @@
       <th class="text-center">Admin</th>
       <th></th>
       <th></th>
+      <th></th>
     </tr>
   </thead>
   @foreach ($users as $user)
@@ -29,6 +30,7 @@
       <td>{{$user->last_name}}</td> 
       <td>{{$user->email}}</td>
       <td class="text-center">@if ($user->is_admin) <i class="fa-solid fa-check"> @endif</td>
+      <td><a href="{{route('user.show',$user->id)}}" class="btn btn-outline-secondary">Anzeigen</a></td>
       <td><a href="{{route('user.edit',$user->id)}}" class="btn btn-outline-secondary">Bearbeiten</a></td>
       <td>
         <form action="{{route('user.destroy',$user->id)}}" method="POST" class="delete" data-title="{{$user->email}}" data-body="Wollen Sie den Benutzer <strong>{{$user->email}}</strong> löschen?" data-error="@if ($user->is_admin) Admin Benutzer können nicht gelöscht werden! @else Benutzer nicht gefunden! @endif">

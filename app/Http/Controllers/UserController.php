@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ingredient;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +19,19 @@ class UserController extends Controller
     {
         $users = User::all();
         return view('user.index', compact('users'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        $ingredients = Ingredient::with('category:id,title')->where('user_id',$id)->get();
+        return view('user.show',compact('user','ingredients'));
     }
 
     /**
