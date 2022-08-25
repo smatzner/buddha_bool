@@ -36,11 +36,18 @@
         <form action="{{route('user.destroy',$user->id)}}" method="POST" class="delete" data-title="{{$user->email}}" data-body="Wollen Sie den Benutzer <strong>{{$user->email}}</strong> löschen?" data-error="@if ($user->is_admin) Admin Benutzer können nicht gelöscht werden! @else Benutzer nicht gefunden! @endif">
           @method('DELETE')
           @csrf
-          <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" @if($user->is_admin) disabled @endif>Löschen</button>
+          @if ($user->is_admin)
+          <span class="d-inline-block" id="hoverMsg" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Admins können nicht gelöscht werden! Bitte entfernen Sie zunächst die Adminrechte dieses Users, bevor Sie ihn löschen.">
+          @endif
+            <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" @if($user->is_admin) disabled @endif>Löschen</button>
+          @if ($user->is_admin)
+          </span>
+          @endif
         </form>
       </td>
     </tr>
   @endforeach
 </table>
+
 
 @endsection

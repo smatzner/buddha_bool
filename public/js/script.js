@@ -51,3 +51,6 @@
     });
     
 })(jQuery)
+
+const hoverMsg = document.getElementById('hoverMsg');
+const popover = new bootstrap.Popover(hoverMsg);

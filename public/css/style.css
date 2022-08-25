@@ -63,7 +63,6 @@
     display: none;
 }
 
-
 p.settings{
     font-size: 10px;
     color: rgba(0,0,0,.6);
@@ -76,7 +75,6 @@ p.settings{
 .show-block{
     display: block;
 }
-
 
 .user-settings{
     margin: 20px;
