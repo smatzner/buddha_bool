@@ -97,7 +97,15 @@ class IngredientController extends Controller
     public function edit(Ingredient $ingredient)
     {
         $categories = Category::select('id', 'title')->get();
-        return view('ingredient.edit', compact('ingredient', 'categories'));
+        if(auth()->user()->is_admin && !$ingredient->user_id){
+            return view('ingredient.edit', compact('ingredient', 'categories'));
+        }
+        elseif(auth()->user()->id == $ingredient->user_id){
+            return view('ingredient.edit', compact('ingredient', 'categories'));
+        }
+        else{
+            abort(404);
+        }
     }
 
     /**
