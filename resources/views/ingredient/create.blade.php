@@ -79,10 +79,12 @@
                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse" name="gf" {{old('gf') == 1 ? 'checked' : ''}}>
             </div>
             {{-- Save as personal ingredient --}}
+            @if(auth()->user()->is_admin)
             <div class="form-check form-switch form-check-reverse">
                 <label class="form-check-label" for="flexSwitchCheckReverse">Als persönliche Zutat speichern</label>
                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse" name="personal" {{old('user_id') ? 'checked' : ''}}>
             </div>
+            @endif
 
 
             <button type="submit" class="btn btn-dark">Speichern</button>

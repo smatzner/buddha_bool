@@ -4,25 +4,29 @@
 
 @section('content')
 
- <h1>Zutaten</h1>
+<h1>Zutaten</h1>
 
- @if( session('success') )
- <div class="alert alert-success">{{ session('success') }}</div>
- @endif
- 
- User_ID: {{auth()->user()->id}} {{-- TODO: Helper rausnehmen --}}
+<p>Hier befindet sich dann ein Text der kurz erklärt, was in dieser Ansicht gemacht werden kann.</p>
+
+@if( session('success') )
+<div class="alert alert-success">{{ session('success') }}</div>
+@endif
+
+User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehmen --}}
+
+{{-- TODO: Filter hinzufügen --}}
 
 <table class="table table-hover table-settings">
   <thead>
     <tr>
       <th>@sortablelink('title','Name')</th>
-      <th>@sortablelink('category_id','Kategorie')</th>
+      <th>@sortablelink('category_id','Kategorie')</th> {{-- FIXME: alphabetische Sortierung, nicht nach ID --}}
       <th class="text-center">@sortablelink('energy','Energie')</th>
       <th class="text-center">@sortablelink('protein','Proteine')</th>
       <th class="text-center">@sortablelink('carbohydrate','Kohlenhydrate')</th>
       <th class="text-center">@sortablelink('fat','Fette')</th>
       <th class="text-center">@sortablelink('vgn','Vegan')</th>
-      <th class="text-center">@sortablelink('vgt','Vegetarisch')</th>
+      <th class="text-center">@sortablelink('veg','Vegetarisch')</th>
       <th class="text-center">@sortablelink('gf','Glutenfrei')</th>
     </tr>
   </thead>
