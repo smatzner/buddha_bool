@@ -18,6 +18,7 @@ function lockedIngredients ($ingredient,int $ingredient_id,int $user_id){
     }
 }
 
+// TODO: doc
 function csvToArray($filename='', $delimiter=',')
 {
     if(!file_exists($filename) || !is_readable($filename))

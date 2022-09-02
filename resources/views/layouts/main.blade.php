@@ -96,7 +96,6 @@
   </div>
 
   {{-- Offcanvas Login --}}
-  {{-- FIXME: 2x Klick auf body --}}
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasRightLabel">Login</h5>
@@ -121,7 +120,6 @@
     </div>
   </div>
 
-  <script src="/css/bootstrap/js/bootstrap.min.js"></script>
   <script src="/js/jquery-3.6.0.min.js"></script>
   <script src="/css/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="/js/fontawesome.js"></script>

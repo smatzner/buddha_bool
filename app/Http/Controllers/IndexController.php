@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Index;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
@@ -16,15 +17,28 @@ class IndexController extends Controller
      */
     public function index()
     {
-        $ingredients = Ingredient::all();
+        // TODO: in for-Schleife und array verpassen
+        $userId = auth()->user()->id;
+        $ingredients = [];
+        $categoryCount = Category::all()->count();
+        for ($i=1; $i <= $categoryCount; $i++) {
+            $ingredient = Ingredient::where('category_id',$i)->whereDoesntHave('lockedIngredients', function($query) use ($userId) { $query->where('user_id',$userId);})->inRandomOrder()->first();
+            array_push($ingredients,$ingredient);
+        }
+        // dd($ingredients);
         $salad = Ingredient::where('category_id',1)->get();
         $vegetable = Ingredient::where('category_id',2)->get();
-        $carb = Arr::random(Ingredient::where('category_id',3)->get()->toArray());
+        // $carb = Ingredient::where('category_id',3)->inRandomOrder()->first();
+        $carb = Ingredient::where('category_id',3)->whereDoesntHave('lockedIngredients', function($query) use ($userId) {
+
+        $query->where('user_id',$userId);
+
+        })->inRandomOrder()->first();
         $protein = Ingredient::where('category_id',4)->get();
         $fat = Ingredient::where('category_id',5)->get();
         $fruits = Ingredient::where('category_id',6)->get();
         $topping = Ingredient::where('category_id',7)->get();
-        return view('index',compact('ingredients','carb'));
+        return view('index',compact('carb','ingredients'));
     }
 
     public function generate(Request $request)

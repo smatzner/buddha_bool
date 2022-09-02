@@ -11,13 +11,13 @@
     <h1 class="h1">The Buddha Bool</h1>
     <form action="{{route('generate')}}" class="" method="POST">
         @csrf
-        <p><strong>Salatbasis: </strong>Blattspinat</p> 
-        <p><strong>Kohlenhyderate: </strong>{{$carb['title']}}</p> 
-        <p><strong>Gemüse: </strong>Brokkoli</p> 
-        <p><strong>Proteinquelle: </strong>Hühnerbrust</p>
-        <p><strong>Fette: </strong>Avocado</p>
-        <p><strong>Früchte: </strong>Heidelbeeren</p>
-        <p><strong>Topping: </strong>Hummus</p>
+        <p><strong>Salatbasis: </strong>{{$ingredients[0]->title}}</p> 
+        <p><strong>Gemüse: </strong>{{$ingredients[1]->title}}</p> 
+        <p><strong>Kohlenhyderate: </strong>{{$ingredients[2]->title}}</p> 
+        <p><strong>Proteinquelle: </strong>{{$ingredients[3]->title}}</p>
+        <p><strong>Fette: </strong>{{$ingredients[4]->title}}</p>
+        <p><strong>Früchte: </strong>{{$ingredients[5]->title}}</p>
+        <p><strong>Topping: </strong>{{$ingredients[6]->title}}</p>
         <p>&nbsp</p>
         <p><strong>Energiegehalt: </strong>437kcal</p>
         <p><strong>Proteingehalt: </strong>56g</p>

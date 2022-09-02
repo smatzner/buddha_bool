@@ -37,7 +37,6 @@ class IngredientController extends Controller
     {
         $categories = Category::select('id', 'title')->get();
         return view('ingredient.create', compact('categories'));
-        //TODO: user / admin unterscheidung
     }
 
     /**
