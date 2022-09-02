@@ -19,10 +19,10 @@ class IngredientController extends Controller
     {
         
         if(Auth::user()->is_admin == 1){
-            $ingredients = Ingredient::with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->get();
+            $ingredients = Ingredient::sortable()->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->get();
         }
         else {
-            $ingredients = Ingredient::with('lockedIngredients')->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->get();
+            $ingredients = Ingredient::sortable()->with('lockedIngredients')->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->get();
         }
 
         return view('ingredient.index', compact('ingredients'));
@@ -181,6 +181,7 @@ class IngredientController extends Controller
         return redirect()->route('ingredient.index')->with('success', $msg);
     }
 
+    // TODO: doc
     public function lock(Request $request, Ingredient $ingredient){
         $ingredient = Ingredient::find($ingredient->id);
         $ingredient->lockedIngredients()->toggle(auth()->user()->id);

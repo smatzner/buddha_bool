@@ -15,15 +15,15 @@
 <table class="table table-hover table-settings">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Kategorie</th>
-      <th class="text-center">Energie</th>
-      <th class="text-center">Proteine</th>
-      <th class="text-center">Kohlenhydrate</th>
-      <th class="text-center">Fette</th>
-      <th class="text-center">Vegan</th>
-      <th class="text-center">Vegetarisch</th>
-      <th class="text-center">Glutenfrei</th>
+      <th>@sortablelink('title','Name')</th>
+      <th>@sortablelink('category_id','Kategorie')</th>
+      <th class="text-center">@sortablelink('energy','Energie')</th>
+      <th class="text-center">@sortablelink('protein','Proteine')</th>
+      <th class="text-center">@sortablelink('carbohydrate','Kohlenhydrate')</th>
+      <th class="text-center">@sortablelink('fat','Fette')</th>
+      <th class="text-center">@sortablelink('vgn','Vegan')</th>
+      <th class="text-center">@sortablelink('vgt','Vegetarisch')</th>
+      <th class="text-center">@sortablelink('gf','Glutenfrei')</th>
     </tr>
   </thead>
   @foreach ($ingredients as $ingredient)

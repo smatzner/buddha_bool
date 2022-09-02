@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Ingredient extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
 
     protected $fillable = [
         'title',
@@ -25,6 +26,18 @@ class Ingredient extends Model
         'vgn' => 'boolean',
         'veg' => 'boolean',
         'gf' => 'boolean'
+    ];
+
+    public $sortable = [
+        'title',
+        'category_id',
+        'energy',
+        'protein',
+        'carbohydrate',
+        'fat',
+        'vgn',
+        'veg',
+        'gf'
     ];
 
     public function category()
