@@ -17,28 +17,24 @@ class IndexController extends Controller
      */
     public function index()
     {
-        // TODO: in for-Schleife und array verpassen
-        $userId = auth()->user()->id;
         $ingredients = [];
         $categoryCount = Category::all()->count();
-        for ($i=1; $i <= $categoryCount; $i++) {
-            $ingredient = Ingredient::where('category_id',$i)->whereDoesntHave('lockedIngredients', function($query) use ($userId) { $query->where('user_id',$userId);})->inRandomOrder()->first();
-            array_push($ingredients,$ingredient);
+
+        if(isset(auth()->user()->id)){
+            $userId = auth()->user()->id;
+            for ($i=1; $i <= $categoryCount; $i++) {
+                $ingredient = Ingredient::where('category_id',$i)->whereDoesntHave('lockedIngredients', function($query) use ($userId) { $query->where('user_id',$userId);})->inRandomOrder()->first();
+                array_push($ingredients,$ingredient);
+            }
         }
-        // dd($ingredients);
-        $salad = Ingredient::where('category_id',1)->get();
-        $vegetable = Ingredient::where('category_id',2)->get();
-        // $carb = Ingredient::where('category_id',3)->inRandomOrder()->first();
-        $carb = Ingredient::where('category_id',3)->whereDoesntHave('lockedIngredients', function($query) use ($userId) {
+        else{
+            for ($i=1; $i <= $categoryCount; $i++) {
+                $ingredient = Ingredient::where('category_id',$i)->where('user_id',NULL)->inRandomOrder()->first();
+                array_push($ingredients,$ingredient);
+            }
+        }
 
-        $query->where('user_id',$userId);
-
-        })->inRandomOrder()->first();
-        $protein = Ingredient::where('category_id',4)->get();
-        $fat = Ingredient::where('category_id',5)->get();
-        $fruits = Ingredient::where('category_id',6)->get();
-        $topping = Ingredient::where('category_id',7)->get();
-        return view('index',compact('carb','ingredients'));
+        return view('index',compact('ingredients'));
     }
 
     public function generate(Request $request)
