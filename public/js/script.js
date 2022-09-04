@@ -13,7 +13,7 @@
     $('form.delete').on('submit',(e)=>{
         e.preventDefault();
         const form = $(e.target);
-        //console.log(form.data('title'),form.data('body'));
+        // console.log(form.data('title'),form.data('body'));
         $('#deleteModalLabel').text(form.data('title')); //test()  innerText
         $('#deleteModal .modal-body').html(form.data('body')); //html()  innerHTML
    

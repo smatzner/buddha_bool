@@ -6,6 +6,11 @@
     <h1>Zutat {{$ingredient->title}} ändern</h1>
     <div class="button"><a href="{{route('ingredient.index')}}" class="btn btn-outline-secondary">Alle Zutaten</a></div>
 
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
 
     <div id="form" class="form">
         <form action="{{route('ingredient.update',$ingredient->id)}}" method="post" enctype="multipart/form-data" novalidate>

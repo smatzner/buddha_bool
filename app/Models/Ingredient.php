@@ -23,6 +23,7 @@ class Ingredient extends Model
     ];
 
     protected $casts = [
+        'category_id' => 'integer',
         'vgn' => 'boolean',
         'veg' => 'boolean',
         'gf' => 'boolean'

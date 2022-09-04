@@ -125,6 +125,14 @@ class IngredientController extends Controller
             'fat' => 'required|numeric',
         ]);
 
+        $ingredientCount = Ingredient::where('category_id',$ingredient->category_id)->where('user_id',NULL)->count();
+        if(auth()->user()->is_admin){
+            if(($ingredientCount == 1) && ($request->input('category_id') != $ingredient->category_id*1)){ 
+                $category = Category::select('id', 'title')->get();
+                return redirect()->back()->with('error', 'Es muss mindestens eine Zutat in der Kategorie \''.$category[$ingredient->category_id-1]->title.'\' vorhanden sein!');
+            }  
+        }
+
         $ingredient->title = $request->title;
         $ingredient->category_id = $request->category_id;
         $ingredient->energy = $request->energy;
@@ -151,19 +159,19 @@ class IngredientController extends Controller
      * @param  \App\Models\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ingredient $ingredient)
+    public function destroy($id)
     {
-        $ingredient = Ingredient::find($ingredient->id);
+        $ingredient = Ingredient::find($id);
         if(!$ingredient){
             $status = 404;
             $msg = 'Zutat nicht gefunden.';
         }
         else{
-            $ingredient->delete();
+            // $ingredient->delete();
             $status = 200;
-            $msg = 'Zutat '.$ingredient->title.' wurde erfolgreich gelöscht.';
+            $msg = 'Zutat '.$ingredient->title.' wurde erfolgreich gelöscht.'; // FIXME: geht nicht
         }
-
+        
         // Aufruf per JavaScript
         if(request()->ajax()){
             return response()->json([
@@ -176,7 +184,7 @@ class IngredientController extends Controller
         if($status == 404){
             abort(404);
         }
-
+        
         return redirect()->route('ingredient.index')->with('success', $msg);
     }
 

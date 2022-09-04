@@ -45,8 +45,8 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
     @if (($ingredient->user_id == auth()->user()->id)||(auth()->user()->is_admin == 1 && !$ingredient->user_id))
     <td><a href="{{route('ingredient.edit',$ingredient->id)}}" class="btn btn-outline-secondary">Bearbeiten</a></td>
     <td>
-      <form action="{{route('ingredient.destroy',$ingredient->id)}}" method="POST" class="delete" data-title="{{$ingredient->title}}" data-body="Wollen Sie die Zutat <strong>{{$ingredient->title}}</strong> löschen?" data-error="Zutat nicht gefunden!">
-        @method('DELETE')
+      <form action="{{route('ingredient.destroy',$ingredient->id)}}" method="POST" class="delete" data-title="{{$ingredient->title}}" data-body="Wollen Sie die Zutat <strong>{{$ingredient->title}}</strong> löschen?" data-error="Zutat nicht gefunden!!">
+        @method('delete')
         @csrf
         <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Löschen</button>
       </form>
