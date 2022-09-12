@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('index');
 // });
-Route::post('/generate',[IndexController::class,'generate'])->name('generate');
+Route::post('/generate',[IndexController::class,'generate'])->name('index.generate');
 Route::resource('/', IndexController::class);
 
 // About
@@ -45,3 +45,4 @@ Route::middleware('auth')->group(function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

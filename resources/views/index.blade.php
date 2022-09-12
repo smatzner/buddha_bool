@@ -4,29 +4,33 @@
     
 @section('content')
 
-{{-- @dump($ingredients) --}}
-{{-- @dump($carb['title']) --}}
-
 <div class="center-content">
     <h1 class="h1">The Buddha Bool</h1>
-    <form action="{{route('generate')}}" class="" method="POST">
+    {{-- @dump(session()) --}}
+    <form action="{{route('index.generate')}}" class="" method="POST">
         @csrf
-        <p><strong>Salatbasis: </strong>{{$ingredients[0]->title}}</p> 
-        <p><strong>Gemüse: </strong>{{$ingredients[1]->title}}</p> 
-        <p><strong>Kohlenhyderate: </strong>{{$ingredients[2]->title}}</p> 
-        <p><strong>Proteinquelle: </strong>{{$ingredients[3]->title}}</p>
-        <p><strong>Fette: </strong>{{$ingredients[4]->title}}</p>
-        <p><strong>Früchte: </strong>{{$ingredients[5]->title}}</p>
-        <p><strong>Topping: </strong>{{$ingredients[6]->title}}</p>
-        <p>&nbsp</p>
-        <p><strong>Energiegehalt: </strong>437kcal</p>
-        <p><strong>Proteingehalt: </strong>56g</p>
-        <p><strong>Fettgehalt: </strong>20g</p>
-        <div>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Drucken</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Exportieren</button>
+        @if (isset($ingredients))
+        
+        
+        <div>             
+            <p><strong>Salatbasis: </strong>{{$ingredients[0]->title}}</p> 
+            <p><strong>Gemüse: </strong>{{$ingredients[1]->title}}</p> 
+            <p><strong>Kohlenhyderate: </strong>{{$ingredients[2]->title}}</p> 
+            <p><strong>Proteinquelle: </strong>{{$ingredients[3]->title}}</p>
+            <p><strong>Fette: </strong>{{$ingredients[4]->title}}</p>
+            <p><strong>Früchte: </strong>{{$ingredients[5]->title}}</p>
+            <p><strong>Topping: </strong>{{$ingredients[6]->title}}</p>
+            <p>&nbsp</p>
+            <p><strong>Energiegehalt: </strong>437kcal</p>
+            <p><strong>Proteingehalt: </strong>56g</p>
+            <p><strong>Fettgehalt: </strong>20g</p>
+            <div>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Drucken</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Exportieren</button>
+            </div>
         </div>
-        <button type="submit" id="recipeButton" class="btn btn-secondary">Ein Rezept generieren</button>
+        @endif
+        <button type="submit" id="recipeButton" name="form" class="btn btn-secondary">Ein Rezept generieren</button>
     </form>
 </div>
 
@@ -51,10 +55,6 @@
       document.querySelector('.settings').addEventListener('click', function(){
           document.querySelector('.wrapper-settings').classList.toggle('show-block');
       });
-
-      // document.querySelector('.login-button').addEventListener('click', function(){
-      //     document.querySelector('.canvas-menu').classList.toggle('active');
-      // });
 
   </script>
 

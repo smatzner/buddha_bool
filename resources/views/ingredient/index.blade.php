@@ -11,6 +11,9 @@
 @if( session('success') )
 <div class="alert alert-success">{{ session('success') }}</div>
 @endif
+@if( session('error') )
+<div class="alert alert-danger">{{ session('error') }}</div>
+@endif
 
 User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehmen --}}
 
@@ -20,7 +23,7 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
   <thead>
     <tr>
       <th>@sortablelink('title','Name')</th>
-      <th>@sortablelink('category_id','Kategorie')</th> {{-- FIXME: alphabetische Sortierung, nicht nach ID --}}
+      <th>@sortablelink('category_id','Kategorie',['category' => 'title'])</th> {{-- FIXME: alphabetische Sortierung, nicht nach ID --}}
       <th class="text-center">@sortablelink('energy','Energie')</th>
       <th class="text-center">@sortablelink('protein','Proteine')</th>
       <th class="text-center">@sortablelink('carbohydrate','Kohlenhydrate')</th>
@@ -45,10 +48,13 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
     @if (($ingredient->user_id == auth()->user()->id)||(auth()->user()->is_admin == 1 && !$ingredient->user_id))
     <td><a href="{{route('ingredient.edit',$ingredient->id)}}" class="btn btn-outline-secondary">Bearbeiten</a></td>
     <td>
-      <form action="{{route('ingredient.destroy',$ingredient->id)}}" method="POST" class="delete" data-title="{{$ingredient->title}}" data-body="Wollen Sie die Zutat <strong>{{$ingredient->title}}</strong> löschen?" data-error="Zutat nicht gefunden!!">
+      <form action="{{route('ingredient.destroy',$ingredient->id)}}" method="POST" class="delete" data-title="{{$ingredient->title}}" data-body="Wollen Sie die Zutat <strong>{{$ingredient->title}}</strong> löschen?" data-error="Zutat nicht gefunden!">
         @method('delete')
         @csrf
-        <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Löschen</button>
+        @if ($ingredient->count == 1)
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Es muss mindestens eine Zutat in der Kategorie '{{$ingredient->category->title}}' vorhanden sein!">
+        @endif
+        <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" @if ($ingredient->count == 1) disabled @endif>Löschen</button>
       </form>
     </td>
     @endif
@@ -75,6 +81,5 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
 
 
 <div class="button"><a href="{{route('ingredient.create')}}" class="btn btn-outline-secondary">Zutat hinzufügen</a></div>  
-
 
 @endsection

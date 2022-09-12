@@ -28,6 +28,9 @@
                 data: convertForm2Json(form),
                 success : function(response){
                     if( response.status == 200){
+                        let successAlertEl = $('<div class="alert alert-success"></div>').html(response.msg);
+                        console.log(form.closest('table'));
+                        form.closest('table').before(successAlertEl);
                         form.closest('tr').remove();
                     }
                 },
@@ -40,6 +43,7 @@
                             errorEl.html(errorMsg);
                         }
                         else{
+                            errorMsg = xhr.responseJSON.msg;
                             let errorAlertEl = $('<div class="alert alert-danger"></div>').html(errorMsg);
                             form.closest('table').before(errorAlertEl);
                         }
@@ -52,5 +56,5 @@
     
 })(jQuery)
 
-const hoverMsg = document.getElementById('hoverMsg');
-const popover = new bootstrap.Popover(hoverMsg);
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))

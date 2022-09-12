@@ -17,6 +17,11 @@ class IndexController extends Controller
      */
     public function index()
     {
+        return view('index');
+    }
+
+    public function generate(Request $request)
+    {
         $ingredients = [];
         $categoryCount = Category::all()->count();
 
@@ -34,13 +39,10 @@ class IndexController extends Controller
             }
         }
 
+        
+        // dd($ingredients);
         return view('index',compact('ingredients'));
-    }
 
-    public function generate(Request $request)
-    {
-        // dd($request);
-        return redirect()->route('index');
     }
 
     /**
