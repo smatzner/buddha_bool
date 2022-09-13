@@ -203,7 +203,7 @@ class IngredientController extends Controller
             $msg = 'Es muss mindestens eine Zutat in der Kategorie \''.$category[$ingredient->category_id-1]->title.'\' vorhanden sein!';
         }
         else{
-            // $ingredient->delete();
+            $ingredient->delete();
             $status = 200;
             $msg = 'Zutat '.$ingredient->title.' wurde erfolgreich gelöscht.';
         }

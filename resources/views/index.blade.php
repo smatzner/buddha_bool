@@ -6,12 +6,14 @@
 
 <div class="center-content">
     <h1 class="h1">The Buddha Bool</h1>
-    {{-- @dump(session()) --}}
+
+    @if( session('error') )
+    <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+    
     <form action="{{route('index.generate')}}" class="" method="POST">
         @csrf
         @if (isset($ingredients))
-        
-        
         <div>             
             <p><strong>Salatbasis: </strong>{{$ingredients[0]->title}}</p> 
             <p><strong>Gemüse: </strong>{{$ingredients[1]->title}}</p> 

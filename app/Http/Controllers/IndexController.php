@@ -39,8 +39,11 @@ class IndexController extends Controller
             }
         }
 
+        if(in_array(NULL,$ingredients)){
+            return redirect()->back()->with('error','Es ist ein Fehler aufgetreten, überprüfen Sie Ihre Zutatenliste!');
+        }
+
         
-        // dd($ingredients);
         return view('index',compact('ingredients'));
 
     }
