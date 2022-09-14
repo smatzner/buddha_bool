@@ -7,6 +7,8 @@ use App\Models\Index;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Barryvdh\DomPDF\Facade\Pdf;
+
 
 class IndexController extends Controller
 {
@@ -20,6 +22,7 @@ class IndexController extends Controller
         return view('index');
     }
 
+    // TODO: doc
     public function generate(Request $request)
     {
         $ingredients = [];
@@ -112,5 +115,13 @@ class IndexController extends Controller
     public function destroy(Index $index)
     {
         //
+    }
+
+    public function pdf(Index $index, Request $request){
+        // dd($ingredients);
+            dump($index);
+            dd($request);
+            $pdf = Pdf::loadView('pdf');
+            return $pdf->download('Rezept.pdf');
     }
 }

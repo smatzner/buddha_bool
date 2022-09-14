@@ -14,7 +14,7 @@
     <form action="{{route('index.generate')}}" class="" method="POST">
         @csrf
         @if (isset($ingredients))
-        <div>             
+        <div>            
             <p><strong>Salatbasis: </strong>{{$ingredients[0]->title}}</p> 
             <p><strong>Gemüse: </strong>{{$ingredients[1]->title}}</p> 
             <p><strong>Kohlenhyderate: </strong>{{$ingredients[2]->title}}</p> 
@@ -28,7 +28,10 @@
             <p><strong>Fettgehalt: </strong>20g</p>
             <div>
                 <button type="button" class="btn btn-sm btn-outline-secondary">Drucken</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Exportieren</button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Exportierenn</button>
+
+                <a href="{{route('index.pdf')}}" class="btn btn-sm btn-outline-secondary">Exportieren</a>+
+
             </div>
         </div>
         @endif

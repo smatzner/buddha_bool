@@ -4,9 +4,12 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use App\Models\Ingredient;
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,16 +23,20 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Index
-// Route::get('/', function () {
-//     return view('index');
-// });
 Route::post('/generate',[IndexController::class,'generate'])->name('index.generate');
+Route::put('/generate/pdf',[IndexController::class,'pdf'])->name('index.pdf');
 Route::resource('/', IndexController::class);
 
 // About
 Route::get('/about', function () {
     return view('about.index');
 });
+
+// // PDF
+// Route::get('/pdf', function(){
+//     $pdf = Pdf::loadView('pdf');
+//     return $pdf->download('Rezept.pdf');
+// });
 
 Route::middleware('auth')->group(function () {
     // Users
@@ -40,6 +47,9 @@ Route::middleware('auth')->group(function () {
     // Ingredients
     Route::put('/ingredient/lock/{ingredient}',[IngredientController::class,'lock'])->name('ingredient.lock');
     Route::resource('/ingredient', IngredientController::class);
+
+    // Recipes
+    Route::resource('/recipe',RecipeController::class);
 });
 
 Auth::routes();

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
 {
@@ -14,7 +17,11 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        //
+        $recipes = Recipe::with(['ingredients' => function ($q){
+            $q->orderBy('category_id');
+        }])->where('user_id',Auth::user()->id)->get();
+        // dd($recipes);
+        return view('recipe.index',compact('recipes'));
     }
 
     /**
@@ -57,7 +64,15 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        //
+        $recipe = $recipe->ingredients()->orderBy('category_id')->get();
+        $ingredients = Ingredient::select('id','category_id','title')->get();
+        $categories = Category::select('id','title')->get();
+        $categoriesCount = Category::get()->count();
+
+        // dd($recipe[0]);
+
+
+        return view('recipe.edit',compact('recipe','ingredients','categories','categoriesCount'));
     }
 
     /**
