@@ -20,40 +20,7 @@ class RecipeController extends Controller
         $recipes = Recipe::with(['ingredients' => function ($q){
             $q->orderBy('category_id');
         }])->where('user_id',Auth::user()->id)->get();
-        // dd($recipes);
         return view('recipe.index',compact('recipes'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Recipe  $recipe
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Recipe $recipe)
-    {
-        //
     }
 
     /**
@@ -64,7 +31,7 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        $recipe = $recipe->ingredients()->orderBy('category_id')->get();
+        $recipeIngredients = $recipe->ingredients()->orderBy('category_id')->get();
         $ingredients = Ingredient::select('id','category_id','title')->get();
         $categories = Category::select('id','title')->get();
         $categoriesCount = Category::get()->count();
@@ -72,7 +39,7 @@ class RecipeController extends Controller
         // dd($recipe[0]);
 
 
-        return view('recipe.edit',compact('recipe','ingredients','categories','categoriesCount'));
+        return view('recipe.edit',compact('recipe','recipeIngredients','ingredients','categories','categoriesCount'));
     }
 
     /**
@@ -84,17 +51,66 @@ class RecipeController extends Controller
      */
     public function update(Request $request, Recipe $recipe)
     {
-        //
+        $categories = Category::select('id','title')->get();
+        $categoriesCount = Category::get()->count();
+        $recipeIngredients = [];
+
+        for ($i=0; $i < $categoriesCount; $i++) { 
+            $request->validate([
+                ''.$categories[$i]->title.'' => 'required|exists:ingredients,id' // TODO: Mit Kategorie validieren
+            ]);  
+        }
+
+        for ($i=0; $i < $categoriesCount; $i++) { 
+            $category = $categories[$i]->title;
+            array_push($recipeIngredients,$request->$category);
+        }
+        $recipe->ingredients()->sync($recipeIngredients);
+
+        return redirect()->route('recipe.index')->with('success');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Recipe  $recipe
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Recipe $recipe)
+    public function destroy($id)
     {
-        //
+        $recipe  = Recipe::find($id);
+        
+        if(!$recipe){
+            $status = 404;
+            $msg = 'Zutat nicht gefunden.';
+        }
+        else{
+            $recipe->delete();
+            $status = 200;
+            $msg = 'Rezept wurde erfolgreich gelöscht.';
+        }
+        
+        // Aufruf per JavaScript
+        if(request()->ajax()){
+            return response()->json([
+                'status' => $status,
+                'msg' => $msg
+            ], $status);
+        }
+        
+        // Aufruf per HTML
+        if($status == 404){
+            abort(404);
+        }
+
+        return redirect()->route('recipe.index')->with('success', $msg);
+    }
+
+    // TODO: doc
+    public function bookmark(Request $request, Recipe $recipe){
+        $recipe->is_bookmarked ? $recipe->is_bookmarked = false : $recipe->is_bookmarked = true;
+        $recipe->save();
+
+        return redirect()->route('recipe.index');
     }
 }

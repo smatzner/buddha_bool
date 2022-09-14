@@ -9,10 +9,14 @@ class Recipe extends Model
 {
     use HasFactory;
 
-    // public function category()
-    // {
-    //     return $this->belongsToMany(Ingredient::class,'ingredient_recipe',);
-    // }
+    protected $fillable = [
+        'user_id',
+        'is_bookmarked'
+    ];
+
+    protected $casts = [
+        'is_bookmarked' => 'boolean'
+    ];
 
     public function ingredients(){
         return $this->belongsToMany(Ingredient::class,'ingredient_recipe','recipe_id','ingredient_id');

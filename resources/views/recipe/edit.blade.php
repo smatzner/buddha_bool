@@ -11,23 +11,30 @@
             {{ session('error') }}
         </div>
     @endif
+
+    @dump(session('error'))
     
     <div id="form" class="form">
-        <form action="{{'recipe.update'}}" method="post" enctype="multipart/form-data" novalidate>
+        <form action="{{route('recipe.update',$recipe->id)}}" method="post" enctype="multipart/form-data" novalidate>
             @csrf
             @method('PUT')
             @for ($i = 0; $i < $categoriesCount; $i++)
             <div class="form-group mb-2">
-                <label for="{{$categories[$i]->title}}_id">{{$categories[$i]->title}}</label><br>
-                <select name="{{$categories[$i]->title}}" id="{{$categories[$i]->title}}_id">
+                <label for="{{$categories[$i]->title}}">{{$categories[$i]->title}}</label><br>
+                <select name="{{$categories[$i]->title}}" id="{{$categories[$i]->title}}">
                     @foreach ($ingredients as $ingredient)
                             @if ($ingredient->category_id == $categories[$i]->id)
-                                <option value="{{$ingredient->id}}" @if((old('id',$recipe[$i])) == $ingredient->id) selected @endif>{{$ingredient->title}}</option>
+                                <option value="{{$ingredient->id}}" @if((old('id',$recipeIngredients[$i])) == $ingredient->id) selected @endif>{{$ingredient->title}}</option>
                             @endif
-                        @endforeach
-                    </select>
-                </div>
-            @endfor            
+                    @endforeach
+                </select>
+            </div>
+            @error($categories[$i]->title)
+                <div class="invalid-feedback show-block">{{ucfirst($message)}}</div>
+            @enderror
+            @endfor
+            
+            <button type="submit" class="btn btn-dark">Speichern</button>
         </form>
     </div>
 

@@ -36,15 +36,25 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
             <td class="text-center">{{$ingredient->title}}</td>
         @endforeach
         <td class="text-center">
-          @if ($recipe->is_bookmarked)
-            <button type="submit" class="btn btn-outline-dark"><i class="fa-solid fa-bookmark"></i></button>
-          @else
-            <button type="submit" class="btn btn-outline-dark"><i class="fa-regular fa-bookmark"></i></button>
-          @endif
+          <form action="{{route('recipe.bookmark',$recipe->id)}}" method="POST">
+            @method('PUT')
+            @csrf
+            <button type="submit" class="btn btn-outline-dark" name="is_bookmarked">
+            @if ($recipe->is_bookmarked)
+                <i class="fa-solid fa-bookmark"></i>
+            @else
+                <i class="fa-regular fa-bookmark"></i>
+            @endif
+            </button>
+          </form>
         </td>
         <td><a href="{{route('recipe.edit',$recipe->id)}}" class="btn btn-outline-secondary">Bearbeiten</a></td>
         <td>
-          <button type="submit" class="btn btn-outline-danger">Löschen</button>
+          <form action="{{route('recipe.destroy',$recipe->id)}}" method="POST" class="delete" data-title="Löschen" data-body="Wollen Sie das Rezept löschen?" data-error="Rezept nicht gefunden!">
+            @method('delete')
+            @csrf
+            <button type="submit" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Löschen</button>
+          </form>
         </td>
       </tr>
     @endforeach

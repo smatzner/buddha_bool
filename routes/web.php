@@ -7,6 +7,7 @@ use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\UserController;
 use App\Models\Ingredient;
+use App\Models\Recipe;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Route;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -24,7 +25,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 // Index
 Route::post('/generate',[IndexController::class,'generate'])->name('index.generate');
-Route::put('/generate/pdf',[IndexController::class,'pdf'])->name('index.pdf');
+Route::get('/pdf',[IndexController::class,'pdf'])->name('index.pdf');
 Route::resource('/', IndexController::class);
 
 // About
@@ -49,6 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/ingredient', IngredientController::class);
 
     // Recipes
+    Route::put('/recipe/bookmark/{recipe}',[RecipeController::class,'bookmark'])->name('recipe.bookmark');
     Route::resource('/recipe',RecipeController::class);
 });
 

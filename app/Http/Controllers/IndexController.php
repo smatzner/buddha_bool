@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Index;
 use App\Models\Ingredient;
+use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -46,6 +47,27 @@ class IndexController extends Controller
             return redirect()->back()->with('error','Es ist ein Fehler aufgetreten, überprüfen Sie Ihre Zutatenliste!');
         }
 
+        // Delete all recipes with user_id = NULL
+        $recipes = Recipe::all();
+        foreach($recipes as $recipe){
+            if(!$recipe->user_id){
+                $recipe->delete();
+            }
+        }
+
+        $recipe = new Recipe();
+        if(isset(auth()->user()->id)){
+            $recipe->user_id = auth()->user()->id;
+        }
+        $recipe->save();
+        $ingredientsRecipe = [];
+        foreach($ingredients as $ingredient){
+            array_push($ingredientsRecipe,$ingredient->id);
+        }
+        $recipe->ingredients()->sync($ingredientsRecipe);
+        
+
+        
         
         return view('index',compact('ingredients'));
 
@@ -117,11 +139,15 @@ class IndexController extends Controller
         //
     }
 
-    public function pdf(Index $index, Request $request){
-        // dd($ingredients);
-            dump($index);
-            dd($request);
-            $pdf = Pdf::loadView('pdf');
-            return $pdf->download('Rezept.pdf');
+    public function pdf(Index $index, Request $request, Recipe $recipe){
+        $recipe = Recipe::where('user_id',NULL)->get()[0];
+        // dump($recipe);
+        $recipeIngredients = $recipe->ingredients()->get();
+        
+        // dd($recipeIngredients);
+
+        // $pdf = Pdf::loadView('pdf',compact('recipeIngredients'));
+        return view('pdf',compact('recipeIngredients'));
+        // return $pdf->download('Rezept.pdf');
     }
 }

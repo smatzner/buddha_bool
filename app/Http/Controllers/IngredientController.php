@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Ingredient;
-use App\Models\IngredientUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use phpDocumentor\Reflection\Types\Null_;
 
 class IngredientController extends Controller
 {
@@ -154,7 +152,7 @@ class IngredientController extends Controller
 
         if(!auth()->user()->is_admin){
             if(($allIngredientsCount - $lockedIngredientCount == 1) && ($request->input('category_id') != $ingredient->category_id*1)){
-                return redirect()->back()->with('error', 'Es muss mindestens eine Zutat in der Kategore \''.$category[$ingredient->category_id-1]->title.'\' verfügbar sein! Entsperren Sie zunächst eine andere Zutat derselben Kategorie oder fügen Sie eine neue Zutat mit dieser Kategorie hinzu.');
+                return redirect()->back()->with('error', 'Es muss mindestens eine Zutat in der Kategorie \''.$category[$ingredient->category_id-1]->title.'\' verfügbar sein! Entsperren Sie zunächst eine andere Zutat derselben Kategorie oder fügen Sie eine neue Zutat mit dieser Kategorie hinzu.');
             }
         }
 
@@ -183,7 +181,7 @@ class IngredientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ingredient  $ingredient
+     * @param  \App\Models\Ingredient  $ingredient // TODO: doc korrigieren
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -239,7 +237,7 @@ class IngredientController extends Controller
             return redirect()->back()->with('error', 'Es muss mindestens eine Zutat in der Kategorie '.$category[$ingredient->category_id-1]->title.' verfügbar sein. Entsperren Sie zunächst eine andere Zutat derselben Kategorie oder fügen Sie eine neue Zutat mit dieser Kategorie hinzu.'); // FIXME: nicht schön
         }
 
-        $ingredient->lockedIngredients()->toggle(auth()->user()->id);
+        $ingredient->lockedIngredients()->toggle($userId);
         
 
         return redirect()->route('ingredient.index');

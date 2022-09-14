@@ -8,6 +8,8 @@
 </head>
 <body>
     PDF
-    @dump($ingredients)
+    @foreach ($recipeIngredients as $ingredient)
+        {{$ingredient->title}}
+    @endforeach
 </body>
 </html>
