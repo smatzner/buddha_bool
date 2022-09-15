@@ -70,7 +70,17 @@ a:hover{
 
 .wrapper-settings{
     display: none;
+    width: 500px;
 }
+
+.form-check.form-switch{
+    width: 200px;
+    margin: 0 auto;
+}
+
+/* .form-check-input form-check-label{
+    float:none !important;
+} */
 
 p.settings{
     font-size: 10px;

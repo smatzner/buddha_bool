@@ -23,11 +23,12 @@
             <p><strong>Früchte: </strong>{{$ingredients[5]->title}}</p>
             <p><strong>Topping: </strong>{{$ingredients[6]->title}}</p>
             <p>&nbsp</p>
-            <p><strong>Energiegehalt: </strong>437kcal</p>
-            <p><strong>Proteingehalt: </strong>56g</p>
-            <p><strong>Fettgehalt: </strong>20g</p>
+            <p><strong>Energiegehalt: </strong>{{$energy}}kcal</p>
+            <p><strong>Proteingehalt: </strong>{{$protein}}g</p>
+            <p><strong>Kohlenhydratgehalt: </strong>{{$carbohydrate}}g</p>
+            <p><strong>Fettgehalt: </strong>{{$fat}}g</p>
             <div>
-                <a href="{{route('index.print')}}" class="btn btn-sm btn-outline-secondary">Drucken</a>
+                <button onclick="window.print()" class="btn btn-sm btn-outline-secondary">Drucken</button>
                 <a href="{{route('index.pdf')}}" class="btn btn-sm btn-outline-secondary">Exportieren</a>
             </div>
         </div>
@@ -36,15 +37,19 @@
     </form>
 </div>
 
-<div class="wrapper-settings">
-    <input type="radio" name="diet" id="vgt">
-    <label for="vgt">vegetarisch</label>
-    <input type="radio" name="diet" id="vgn">
-    <label for="vgn">vegan</label>
-    <input type="radio" name="diet" id="psc">
-    <label for="psc">pescetarisch</label>
-    <input type="radio" name="diet" id="gltf">
-    <label for="gltf">glutenfrei</label>
+<div class="wrapper-settings mx-auto">
+    <div class="form-check form-switch">
+        <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="veg">
+        <label class="form-check-label mx-auto" for="veg">vegetarisch</label>
+    </div>
+    <div class="form-check form-switch">
+        <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="vgn">
+        <label class="form-check-label mx-auto" for="vgn">vegan</label>
+    </div>
+    <div class="form-check form-switch">
+        <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="gf">
+        <label class="form-check-label mx-auto" for="gf">glutenfrei</label>
+    </div>
 </div>
 <p class="center-content settings">Einstellungen</p>
 </div>

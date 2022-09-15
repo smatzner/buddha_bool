@@ -42,23 +42,45 @@ class IndexController extends Controller
             }
         }
 
+        // Check if there is a category with 0 ingredients
         if(in_array(NULL,$ingredients)){
             return redirect()->back()->with('error','Es ist ein Fehler aufgetreten, überprüfen Sie Ihre Zutatenliste!');
         }
 
-        // Delete all recipes with user_id = NULL
+        // Energy, Proteins, Carbohydrates, Fat
+        $energy = [];
+        $protein = [];
+        $carbohydrate = [];
+        $fat = [];
+        foreach($ingredients as $ingredient){
+            array_push($energy,$ingredient->energy);
+            array_push($protein,$ingredient->protein);
+            array_push($carbohydrate,$ingredient->carbohydrate);
+            array_push($fat,$ingredient->fat);
+        }
+        $energy = array_sum($energy);
+        $protein = array_sum($protein);
+        $carbohydrate = array_sum($carbohydrate);
+        $fat = array_sum($fat);
+
+
+        
         $recipes = Recipe::all();
         $recipeCount = Recipe::where('user_id',auth()->user()->id)->where('is_bookmarked',false)->count();
        
         foreach($recipes as $recipe){
-            if(!$recipe->user_id){
+            // Delete all recipes with user_id = NULL
+            if(!$recipe->user_id){ 
                 $recipe->delete();
             }
+            // Delete last 5 recipes with user_id = auth()->user()->id
             else{
                 $keep = Recipe::where('user_id',auth()->user()->id)->where('is_bookmarked',false)->latest()->take(4)->pluck('id');
                 Recipe::where('user_id',auth()->user()->id)->where('is_bookmarked',false)->whereNotIn('id', $keep)->delete();
             }
         }
+
+        // save new Recipe
         $recipe = new Recipe();
         if(isset(auth()->user()->id)){
             $recipe->user_id = auth()->user()->id;
@@ -73,7 +95,7 @@ class IndexController extends Controller
 
         
         
-        return view('index',compact('ingredients'));
+        return view('index',compact('ingredients','energy','protein','carbohydrate','fat'));
 
     }
 
@@ -145,21 +167,10 @@ class IndexController extends Controller
 
     // TODO: doc
     public function pdf(){
-        $recipe = Recipe::where('user_id',NULL)->get()[0];// FIXME: geht nur wenn kein User angemeldet
-        $recipeIngredients = $recipe->ingredients()->orderBy('category_id')->get();
+        $recipe = Recipe::latest('created_at')->first()->ingredients()->orderBy('category_id')->get();
 
-        $pdf = Pdf::loadView('pdf',compact('recipeIngredients'));
+        $pdf = Pdf::loadView('pdf',compact('recipe'));
         return $pdf->download('Rezept.pdf');
-        return view('pdf',compact('recipeIngredients')); // TODO: entfernen
-    }
-
-    public function print(){
-        $recipe = Recipe::where('user_id',NULL)->get()[0]; 
-        $recipeIngredients = $recipe->ingredients()->orderBy('category_id')->get();
-
-        $pdf = Pdf::loadView('pdf',compact('recipeIngredients'));
-        return $pdf->stream('Rezept.pdf',array("Attachment" => false));
-
-        return view('pdf',compact('recipeIngredients')); // TODO: entfernen
+        return view('pdf',compact('recipe')); // TODO: entfernen
     }
 }

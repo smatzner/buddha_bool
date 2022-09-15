@@ -25,7 +25,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 // Index
 Route::post('/generate',[IndexController::class,'generate'])->name('index.generate');
-Route::get('/print',[IndexController::class,'print'])->name('index.print');
 Route::get('/pdf',[IndexController::class,'pdf'])->name('index.pdf');
 Route::resource('/', IndexController::class);
 

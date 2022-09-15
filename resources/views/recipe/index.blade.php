@@ -32,9 +32,15 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
   </thead>
   @foreach ($recipes as $recipe)
       <tr @if ($recipe->is_bookmarked) class="table-warning" @endif>
-        @foreach ($recipe->ingredients as $ingredient)
-            <td class="text-center">{{$ingredient->title}}</td>  
-        @endforeach
+        @for ($i = 0; $i < $categoriesCount; $i++)
+            <td class="text-center">
+              @if (isset($recipe->ingredients[$i]->category_id))
+                  {{$recipe->ingredients[$i]->title}}
+              @else
+                <strong>keine Zutat</strong>
+              @endif 
+            </td>
+        @endfor
         <td class="text-center">
           <form action="{{route('recipe.bookmark',$recipe->id)}}" method="POST">
             @method('PUT')
