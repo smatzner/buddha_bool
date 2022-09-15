@@ -30,10 +30,10 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
       <th class="text-center">Gespeichert</th>
     </tr>
   </thead>
-    @foreach ($recipes as $recipe)
+  @foreach ($recipes as $recipe)
       <tr @if ($recipe->is_bookmarked) class="table-warning" @endif>
         @foreach ($recipe->ingredients as $ingredient)
-            <td class="text-center">{{$ingredient->title}}</td>
+            <td class="text-center">{{$ingredient->title}}</td>  
         @endforeach
         <td class="text-center">
           <form action="{{route('recipe.bookmark',$recipe->id)}}" method="POST">

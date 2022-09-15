@@ -27,7 +27,7 @@
             <p><strong>Proteingehalt: </strong>56g</p>
             <p><strong>Fettgehalt: </strong>20g</p>
             <div>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Drucken</button>
+                <a href="{{route('index.print')}}" class="btn btn-sm btn-outline-secondary">Drucken</a>
                 <a href="{{route('index.pdf')}}" class="btn btn-sm btn-outline-secondary">Exportieren</a>
             </div>
         </div>

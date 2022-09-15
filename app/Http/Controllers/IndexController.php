@@ -7,7 +7,6 @@ use App\Models\Index;
 use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 
@@ -140,12 +139,22 @@ class IndexController extends Controller
     }
 
     // TODO: doc
-    public function pdf(Index $index, Request $request, Recipe $recipe){
+    public function pdf(){
         $recipe = Recipe::where('user_id',NULL)->get()[0];
         $recipeIngredients = $recipe->ingredients()->orderBy('category_id')->get();
 
         $pdf = Pdf::loadView('pdf',compact('recipeIngredients'));
         return $pdf->download('Rezept.pdf');
+        return view('pdf',compact('recipeIngredients')); // TODO: entfernen
+    }
+
+    public function print(){
+        $recipe = Recipe::where('user_id',NULL)->get()[0];
+        $recipeIngredients = $recipe->ingredients()->orderBy('category_id')->get();
+
+        $pdf = Pdf::loadView('pdf',compact('recipeIngredients'));
+        return $pdf->stream('Rezept.pdf',array("Attachment" => false));
+
         return view('pdf',compact('recipeIngredients')); // TODO: entfernen
     }
 }
