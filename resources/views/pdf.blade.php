@@ -7,9 +7,18 @@
     <title>PDF</title>
 </head>
 <body>
-    PDF
-    @foreach ($recipeIngredients as $ingredient)
-        {{$ingredient->title}}
-    @endforeach
+    <div style="text-align: center; font-family: monospace;">            
+        <p><strong>Salatbasis: </strong>{{$recipeIngredients[0]->title}}</p> 
+        <p><strong>Gemüse: </strong>{{$recipeIngredients[1]->title}}</p> 
+        <p><strong>Kohlenhyderate: </strong>{{$recipeIngredients[2]->title}}</p> 
+        <p><strong>Proteinquelle: </strong>{{$recipeIngredients[3]->title}}</p>
+        <p><strong>Fette: </strong>{{$recipeIngredients[4]->title}}</p>
+        <p><strong>Früchte: </strong>{{$recipeIngredients[5]->title}}</p>
+        <p><strong>Topping: </strong>{{$recipeIngredients[6]->title}}</p>
+        <br><br>
+        <p><strong>Energiegehalt: </strong>437kcal</p>
+        <p><strong>Proteingehalt: </strong>56g</p>
+        <p><strong>Fettgehalt: </strong>20g</p>
+    </div>
 </body>
 </html>

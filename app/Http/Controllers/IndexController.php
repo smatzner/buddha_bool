@@ -139,15 +139,13 @@ class IndexController extends Controller
         //
     }
 
+    // TODO: doc
     public function pdf(Index $index, Request $request, Recipe $recipe){
         $recipe = Recipe::where('user_id',NULL)->get()[0];
-        // dump($recipe);
-        $recipeIngredients = $recipe->ingredients()->get();
-        
-        // dd($recipeIngredients);
+        $recipeIngredients = $recipe->ingredients()->orderBy('category_id')->get();
 
-        // $pdf = Pdf::loadView('pdf',compact('recipeIngredients'));
-        return view('pdf',compact('recipeIngredients'));
-        // return $pdf->download('Rezept.pdf');
+        $pdf = Pdf::loadView('pdf',compact('recipeIngredients'));
+        return $pdf->download('Rezept.pdf');
+        return view('pdf',compact('recipeIngredients')); // TODO: entfernen
     }
 }

@@ -28,10 +28,7 @@
             <p><strong>Fettgehalt: </strong>20g</p>
             <div>
                 <button type="button" class="btn btn-sm btn-outline-secondary">Drucken</button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Exportierenn</button>
-
                 <a href="{{route('index.pdf')}}" class="btn btn-sm btn-outline-secondary">Exportieren</a>
-
             </div>
         </div>
         @endif

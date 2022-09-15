@@ -33,12 +33,6 @@ Route::get('/about', function () {
     return view('about.index');
 });
 
-// // PDF
-// Route::get('/pdf', function(){
-//     $pdf = Pdf::loadView('pdf');
-//     return $pdf->download('Rezept.pdf');
-// });
-
 Route::middleware('auth')->group(function () {
     // Users
     Route::middleware('can:is_admin')->group(function(){
