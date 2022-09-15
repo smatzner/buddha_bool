@@ -48,12 +48,17 @@ class IndexController extends Controller
 
         // Delete all recipes with user_id = NULL
         $recipes = Recipe::all();
+        $recipeCount = Recipe::where('user_id',auth()->user()->id)->where('is_bookmarked',false)->count();
+       
         foreach($recipes as $recipe){
             if(!$recipe->user_id){
                 $recipe->delete();
             }
+            else{
+                $keep = Recipe::where('user_id',auth()->user()->id)->where('is_bookmarked',false)->latest()->take(4)->pluck('id');
+                Recipe::where('user_id',auth()->user()->id)->where('is_bookmarked',false)->whereNotIn('id', $keep)->delete();
+            }
         }
-
         $recipe = new Recipe();
         if(isset(auth()->user()->id)){
             $recipe->user_id = auth()->user()->id;
@@ -140,7 +145,7 @@ class IndexController extends Controller
 
     // TODO: doc
     public function pdf(){
-        $recipe = Recipe::where('user_id',NULL)->get()[0];
+        $recipe = Recipe::where('user_id',NULL)->get()[0];// FIXME: geht nur wenn kein User angemeldet
         $recipeIngredients = $recipe->ingredients()->orderBy('category_id')->get();
 
         $pdf = Pdf::loadView('pdf',compact('recipeIngredients'));
@@ -149,7 +154,7 @@ class IndexController extends Controller
     }
 
     public function print(){
-        $recipe = Recipe::where('user_id',NULL)->get()[0];
+        $recipe = Recipe::where('user_id',NULL)->get()[0]; 
         $recipeIngredients = $recipe->ingredients()->orderBy('category_id')->get();
 
         $pdf = Pdf::loadView('pdf',compact('recipeIngredients'));

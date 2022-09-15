@@ -19,7 +19,7 @@ class RecipeController extends Controller
     {
         $recipes = Recipe::with(['ingredients' => function ($q){
             $q->orderBy('category_id');
-        }])->where('user_id',Auth::user()->id)->get();
+        }])->where('user_id',Auth::user()->id)->orderBy('is_bookmarked','desc')->orderBy('created_at')->get();
         return view('recipe.index',compact('recipes'));
     }
 
