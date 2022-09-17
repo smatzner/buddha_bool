@@ -79,6 +79,10 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
   @endforeach
 </table>
 
+<div class="myPagination">
+{{ $ingredients->links("pagination::bootstrap-4")}}
+</div>
+
 
 <div class="button"><a href="{{route('ingredient.create')}}" class="btn btn-outline-secondary">Zutat hinzufügen</a></div>  
 

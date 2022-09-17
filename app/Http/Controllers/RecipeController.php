@@ -21,6 +21,9 @@ class RecipeController extends Controller
             $q->orderBy('category_id');
         }])->where('user_id',Auth::user()->id)->orderBy('is_bookmarked','desc')->orderBy('created_at')->get();
         $categoriesCount = Category::get()->count();
+
+        // Rezept rauslöschen, wenn eine Zutat fehlt
+
         return view('recipe.index',compact('recipes','categoriesCount'));
     }
 

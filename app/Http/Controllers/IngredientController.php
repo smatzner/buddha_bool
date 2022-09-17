@@ -17,7 +17,7 @@ class IngredientController extends Controller
     public function index()
     {        
         if(Auth::user()->is_admin == 1){
-            $ingredients = Ingredient::sortable()->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->get();
+            $ingredients = Ingredient::sortable()->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->paginate(15);
             // Add value 'count = 1' to categories with just one ingredient
             foreach($ingredients as $ingredient){
                 if((Ingredient::where('category_id',$ingredient->category_id)->where('user_id',NULL)->count() == 1)){
@@ -26,12 +26,17 @@ class IngredientController extends Controller
             }
         }
         else {
-            $ingredients = Ingredient::sortable()->with('lockedIngredients')->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->get();
+            $ingredients = Ingredient::sortable()->with('lockedIngredients')->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->paginate(15);
+        }
+
+        if(!empty($_SERVER['QUERY_STRING'])){
+            $queryString = $_SERVER['QUERY_STRING'];
+            return view('ingredient.index', compact('ingredients','queryString'));
         }
 
 
 
-
+        // $_SERVER['QUERY_STRING'] -> wie bei lock()
         return view('ingredient.index', compact('ingredients'));
     }
 
@@ -189,7 +194,7 @@ class IngredientController extends Controller
         $ingredient = Ingredient::find($id);
         $ingredientCount = Ingredient::where('category_id',$ingredient->category_id)->where('user_id',NULL)->count();
     
- 
+        // Warnung ausgeben, wenn Zutat mit Rezept verbunden
 
         if(!$ingredient){
             $status = 404;
@@ -223,7 +228,7 @@ class IngredientController extends Controller
     }
 
     // TODO: doc
-    public function lock(Request $request, Ingredient $ingredient){
+    public function lock(Ingredient $ingredient,Request $request){
         $category = Category::select('id', 'title')->get();
         $userId = auth()->user()->id;
 
@@ -239,7 +244,12 @@ class IngredientController extends Controller
 
         $ingredient->lockedIngredients()->toggle($userId);
         
+        if(stristr($_SERVER['HTTP_REFERER'],'sort')){
+            $_GET = stristr($_SERVER['HTTP_REFERER'],'sort');
+            return redirect()->route('ingredient.index',$_GET);
+        }
 
+        // if(!empty($_SERVER['QUERY_STRING']))
         return redirect()->route('ingredient.index');
     }
 }

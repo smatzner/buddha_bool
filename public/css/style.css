@@ -48,8 +48,6 @@ a:hover{
     transform: none;
 }
 
-
-
 #recipeButton{
     margin: 10px auto;
 }
@@ -73,14 +71,19 @@ a:hover{
     width: 500px;
 }
 
-.form-check.form-switch{
+.energy{
+    font-size: 0.6rem;
+}
+
+.amount{
+    font-size: 0.9rem;
+}
+
+.wrapper-settings .form-check.form-switch{
     width: 200px;
     margin: 0 auto;
 }
 
-/* .form-check-input form-check-label{
-    float:none !important;
-} */
 
 p.settings{
     font-size: 10px;
@@ -107,6 +110,22 @@ p.settings{
     color: rgb(150, 150, 150);
 }
 
+.page-link{
+    color: black;
+}
+
+.page-link:hover{
+    color: rgb(150, 150, 150);
+}
+
+.page-link:focus{
+    box-shadow: 0 0 0 0.2rem rgb(150 150 150 / 50%);
+}
+
+.page-item.active .page-link{
+    background-color: rgb(150, 150, 150);
+    border-color: rgb(150, 150, 150);
+}
 @media print{
     *{
         font-size: 1.2rem;
@@ -121,10 +140,10 @@ p.settings{
     }
 
     .btn{
-    display: none;
+        display: none;
     }
 
     .settings{
-    display: none;
+        display: none;
     }
 }

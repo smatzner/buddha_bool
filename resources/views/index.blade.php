@@ -6,6 +6,7 @@
 
 <div class="center-content">
     <h1 class="h1">The Buddha Bool</h1>
+    
 
     @if( session('error') )
     <div class="alert alert-danger">{{ session('error') }}</div>
@@ -14,8 +15,9 @@
     <form action="{{route('index.generate')}}" class="" method="POST">
         @csrf
         @if (isset($ingredients))
-        <div>            
-            <p><strong>Salatbasis: </strong>{{$ingredients[0]->title}}</p> 
+        <div>
+            <h5>Für 1 Portion:</h5>
+            <p><strong>Salatbasis: </strong><span class="amount">40g </span>{{$ingredients[0]->title}} <span class="energy"><i class="fa-solid fa-fire-flame-simple"></i> 55kcal</span></p>
             <p><strong>Gemüse: </strong>{{$ingredients[1]->title}}</p> 
             <p><strong>Kohlenhyderate: </strong>{{$ingredients[2]->title}}</p> 
             <p><strong>Proteinquelle: </strong>{{$ingredients[3]->title}}</p>

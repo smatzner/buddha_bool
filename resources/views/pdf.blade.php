@@ -8,18 +8,20 @@
 </head>
 <body>
     <h1 style="text-align: center; font-family: monospace;">The Buddha Bool</h1>
-    <div style="text-align: center; font-family: monospace;">            
-        <p><strong>Salatbasis: </strong>{{$recipe[0]->title}}</p> 
-        <p><strong>Gemüse: </strong>{{$recipe[1]->title}}</p> 
-        <p><strong>Kohlenhyderate: </strong>{{$recipe[2]->title}}</p> 
-        <p><strong>Proteinquelle: </strong>{{$recipe[3]->title}}</p>
-        <p><strong>Fette: </strong>{{$recipe[4]->title}}</p>
-        <p><strong>Früchte: </strong>{{$recipe[5]->title}}</p>
-        <p><strong>Topping: </strong>{{$recipe[6]->title}}</p>
+    <div style="text-align: center; font-family: monospace;">   
+        <h5>Für 1 Portion:</h5>         
+        <p><strong>Salatbasis: </strong>{{$ingredients[0]->title}}</p> 
+        <p><strong>Gemüse: </strong>{{$ingredients[1]->title}}</p> 
+        <p><strong>Kohlenhyderate: </strong>{{$ingredients[2]->title}}</p> 
+        <p><strong>Proteinquelle: </strong>{{$ingredients[3]->title}}</p>
+        <p><strong>Fette: </strong>{{$ingredients[4]->title}}</p>
+        <p><strong>Früchte: </strong>{{$ingredients[5]->title}}</p>
+        <p><strong>Topping: </strong>{{$ingredients[6]->title}}</p>
         <br><br>
-        <p><strong>Energiegehalt: </strong>437kcal</p>
-        <p><strong>Proteingehalt: </strong>56g</p>
-        <p><strong>Fettgehalt: </strong>20g</p>
+        <p><strong>Energiegehalt: </strong>{{$energy}}kcal</p>
+        <p><strong>Proteingehalt: </strong>{{$protein}}g</p>
+        <p><strong>Kohlenhydratgehalt: </strong>{{$carbohydrate}}g</p>
+        <p><strong>Fettgehalt: </strong>{{$fat}}g</p>
     </div>
 </body>
 </html>
