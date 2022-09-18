@@ -30,16 +30,46 @@ class IndexController extends Controller
         $ingredients = [];
         $categoryCount = Category::all()->count();
 
+        !empty($request->veg) ? $veg = $request->has('veg') : $veg = NULL;
+        !empty($request->vgn) ? $vgn = $request->has('vgn') : $vgn = NULL;
+        !empty($request->gf) ? $gf = $request->has('gf') : $gf = NULL;
+
         if(isset(auth()->user()->id)){
             $userId = auth()->user()->id;
             for ($i=1; $i <= $categoryCount; $i++) {
-                $ingredient = Ingredient::where('category_id',$i)->whereDoesntHave('lockedIngredients', function($query) use ($userId) { $query->where('user_id',$userId);})->inRandomOrder()->first();
+                $ingredient = Ingredient::where('category_id',$i)
+                                        ->whereDoesntHave('lockedIngredients', function($query) use ($userId) { 
+                                            $query->where('user_id',$userId);
+                                        })
+                                        ->when($veg, function($query,$veg){
+                                            $query->where('veg',$veg);
+                                        })
+                                        ->when($vgn, function($query,$vgn){
+                                            $query->where('vgn',$vgn);
+                                        })
+                                        ->when($gf, function($query,$gf){
+                                            $query->where('gf',$gf);
+                                        })
+                                        ->inRandomOrder()
+                                        ->first();
                 array_push($ingredients,$ingredient);
             }
         }
         else{
             for ($i=1; $i <= $categoryCount; $i++) {
-                $ingredient = Ingredient::where('category_id',$i)->where('user_id',NULL)->inRandomOrder()->first();
+                $ingredient = Ingredient::where('category_id',$i)
+                                        ->where('user_id',NULL)
+                                        ->when($veg, function($query,$veg){
+                                            $query->where('veg',$veg);
+                                        })
+                                        ->when($vgn, function($query,$vgn){
+                                            $query->where('vgn',$vgn);
+                                        })
+                                        ->when($gf, function($query,$gf){
+                                            $query->where('gf',$gf);
+                                        })
+                                        ->inRandomOrder()
+                                        ->first();
                 array_push($ingredients,$ingredient);
             }
         }
@@ -132,7 +162,7 @@ class IndexController extends Controller
         }
         $recipe->ingredients()->sync($ingredientsRecipe);
         
-        return view('index',compact('ingredients','energy','protein','carbohydrate','fat','portions','amount'));
+        return view('index',compact('ingredients','energy','protein','carbohydrate','fat','portions','amount','veg','vgn','gf'));
 
     }
 
