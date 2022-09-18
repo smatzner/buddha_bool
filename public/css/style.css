@@ -48,6 +48,15 @@ a:hover{
     transform: none;
 }
 
+.portions-input{
+    width: 60px;
+    display: inline-block;
+}
+
+.portions-label{
+    font-size: 1.1rem;
+}
+
 #recipeButton{
     margin: 10px auto;
 }
@@ -69,10 +78,6 @@ a:hover{
 .wrapper-settings{
     display: none;
     width: 500px;
-}
-
-.energy{
-    font-size: 0.6rem;
 }
 
 .amount{
@@ -145,5 +150,20 @@ p.settings{
 
     .settings{
         display: none;
+    }
+
+    .portions-input{
+        border: none;
+        font-weight: 800;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
     }
 }

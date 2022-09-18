@@ -8,7 +8,9 @@ use App\Models\Ingredient;
 use App\Models\Recipe;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Arr;
+use Symfony\Component\Console\Input\Input;
 
 class IndexController extends Controller
 {
@@ -48,7 +50,17 @@ class IndexController extends Controller
         }
 
         // Energy, Proteins, Carbohydrates, Fat
-        $portionFactor = 2;
+        $portionSize = 5; // 500g/portion
+        if($request->input('number') && $request->submit == 'portions'){
+            $portions = $request->input('number');
+            $ingredients = Recipe::latest('created_at')->first()->ingredients()->orderBy('category_id')->get();
+        }
+        else{
+            $portions = 1;
+        }
+        $request->session()->put('portions', $portions);
+
+        $amount = [];
         $energy = [];
         $protein = [];
         $carbohydrate = [];
@@ -56,40 +68,44 @@ class IndexController extends Controller
         foreach($ingredients as $ingredient){
             // Topping 5% proportion
             if($ingredient->category_id == 7){
-                array_push($energy,$ingredient->energy*0.05*$portionFactor);
-                array_push($protein,$ingredient->protein*0.05*$portionFactor);
-                array_push($carbohydrate,$ingredient->carbohydrate*0.05*$portionFactor);
-                array_push($fat,$ingredient->fat*0.05*$portionFactor);
+                array_push($energy,$ingredient->energy*0.05*$portionSize*$portions);
+                array_push($protein,$ingredient->protein*0.05*$portionSize*$portions);
+                array_push($carbohydrate,$ingredient->carbohydrate*0.05*$portionSize*$portions);
+                array_push($fat,$ingredient->fat*0.05*$portionSize*$portions);
+                array_push($amount,0.05*$portionSize*100*$portions);
             }
             // Salatbasis & Früchte 10% proportion
             if($ingredient->category_id == 1 || $ingredient->category_id == 6){
-                array_push($energy,$ingredient->energy*0.1*$portionFactor);
-                array_push($protein,$ingredient->protein*0.1*$portionFactor);
-                array_push($carbohydrate,$ingredient->carbohydrate*0.1*$portionFactor);
-                array_push($fat,$ingredient->fat*0.1*$portionFactor);
+                array_push($energy,$ingredient->energy*0.1*$portionSize*$portions);
+                array_push($protein,$ingredient->protein*0.1*$portionSize*$portions);
+                array_push($carbohydrate,$ingredient->carbohydrate*0.1*$portionSize*$portions);
+                array_push($fat,$ingredient->fat*0.1*$portionSize*$portions);
+                array_push($amount,0.1*$portionSize*100*$portions);
             }
             // Fette 15% proportion
             if($ingredient->category_id == 5){
-                array_push($energy,$ingredient->energy*0.15*$portionFactor);
-                array_push($protein,$ingredient->protein*0.15*$portionFactor);
-                array_push($carbohydrate,$ingredient->carbohydrate*0.15*$portionFactor);
-                array_push($fat,$ingredient->fat*0.15*$portionFactor);
+                array_push($energy,$ingredient->energy*0.15*$portionSize*$portions);
+                array_push($protein,$ingredient->protein*0.15*$portionSize*$portions);
+                array_push($carbohydrate,$ingredient->carbohydrate*0.15*$portionSize*$portions);
+                array_push($fat,$ingredient->fat*0.15*$portionSize*$portions);
+                array_push($amount,0.15*$portionSize*100*$portions);
             }
             // Gemüse, Kohlenhydrate, Proteine 20% proportion
             if($ingredient->category_id == 2 || $ingredient->category_id == 3 || $ingredient->category_id == 4){
-                array_push($energy,$ingredient->energy*0.2*$portionFactor);
-                array_push($protein,$ingredient->protein*0.2*$portionFactor);
-                array_push($carbohydrate,$ingredient->carbohydrate*0.2*$portionFactor);
-                array_push($fat,$ingredient->fat*0.2*$portionFactor);
+                array_push($energy,$ingredient->energy*0.2*$portionSize*$portions);
+                array_push($protein,$ingredient->protein*0.2*$portionSize*$portions);
+                array_push($carbohydrate,$ingredient->carbohydrate*0.2*$portionSize*$portions);
+                array_push($fat,$ingredient->fat*0.2*$portionSize*$portions);
+                array_push($amount,0.2*$portionSize*100*$portions);
             }
         }
-        $energy = array_sum($energy);
-        $protein = array_sum($protein);
-        $carbohydrate = array_sum($carbohydrate);
-        $fat = array_sum($fat);
+        $energy = round(array_sum($energy),1);
+        $protein = round(array_sum($protein),1);
+        $carbohydrate = round(array_sum($carbohydrate),1);
+        $fat = round(array_sum($fat),1);
+        $amount = array_sum($amount);
 
 
-        
         $recipes = Recipe::all();
        
         foreach($recipes as $recipe){
@@ -116,10 +132,7 @@ class IndexController extends Controller
         }
         $recipe->ingredients()->sync($ingredientsRecipe);
         
-
-        
-        
-        return view('index',compact('ingredients','energy','protein','carbohydrate','fat'));
+        return view('index',compact('ingredients','energy','protein','carbohydrate','fat','portions','amount'));
 
     }
 
@@ -190,11 +203,13 @@ class IndexController extends Controller
     }
 
     // TODO: doc
-    public function pdf(){
+    public function pdf(Request $request){
         $ingredients = Recipe::latest('created_at')->first()->ingredients()->orderBy('category_id')->get();
 
         // Energy, Proteins, Carbohydrates, Fat
-        $portionFactor = 2;
+        $portionSize = 5;
+        $portions = $request->session()->get('portions');
+        $amount = [];
         $energy = [];
         $protein = [];
         $carbohydrate = [];
@@ -202,40 +217,45 @@ class IndexController extends Controller
         foreach($ingredients as $ingredient){
             // Topping 5% proportion
             if($ingredient->category_id == 7){
-                array_push($energy,$ingredient->energy*0.05*$portionFactor);
-                array_push($protein,$ingredient->protein*0.05*$portionFactor);
-                array_push($carbohydrate,$ingredient->carbohydrate*0.05*$portionFactor);
-                array_push($fat,$ingredient->fat*0.05*$portionFactor);
+                array_push($energy,$ingredient->energy*0.05*$portionSize*$portions);
+                array_push($protein,$ingredient->protein*0.05*$portionSize*$portions);
+                array_push($carbohydrate,$ingredient->carbohydrate*0.05*$portionSize*$portions);
+                array_push($fat,$ingredient->fat*0.05*$portionSize*$portions);
+                array_push($amount,0.05*$portionSize*100*$portions);
             }
             // Salatbasis & Früchte 10% proportion
             if($ingredient->category_id == 1 || $ingredient->category_id == 6){
-                array_push($energy,$ingredient->energy*0.1*$portionFactor);
-                array_push($protein,$ingredient->protein*0.1*$portionFactor);
-                array_push($carbohydrate,$ingredient->carbohydrate*0.1*$portionFactor);
-                array_push($fat,$ingredient->fat*0.1*$portionFactor);
+                array_push($energy,$ingredient->energy*0.1*$portionSize*$portions);
+                array_push($protein,$ingredient->protein*0.1*$portionSize*$portions);
+                array_push($carbohydrate,$ingredient->carbohydrate*0.1*$portionSize*$portions);
+                array_push($fat,$ingredient->fat*0.1*$portionSize*$portions);
+                array_push($amount,0.1*$portionSize*100*$portions);
             }
             // Fette 15% proportion
             if($ingredient->category_id == 5){
-                array_push($energy,$ingredient->energy*0.15*$portionFactor);
-                array_push($protein,$ingredient->protein*0.15*$portionFactor);
-                array_push($carbohydrate,$ingredient->carbohydrate*0.15*$portionFactor);
-                array_push($fat,$ingredient->fat*0.15*$portionFactor);
+                array_push($energy,$ingredient->energy*0.15*$portionSize*$portions);
+                array_push($protein,$ingredient->protein*0.15*$portionSize*$portions);
+                array_push($carbohydrate,$ingredient->carbohydrate*0.15*$portionSize*$portions);
+                array_push($fat,$ingredient->fat*0.15*$portionSize*$portions);
+                array_push($amount,0.15*$portionSize*100*$portions);
             }
             // Gemüse, Kohlenhydrate, Proteine 20% proportion
             if($ingredient->category_id == 2 || $ingredient->category_id == 3 || $ingredient->category_id == 4){
-                array_push($energy,$ingredient->energy*0.2*$portionFactor);
-                array_push($protein,$ingredient->protein*0.2*$portionFactor);
-                array_push($carbohydrate,$ingredient->carbohydrate*0.2*$portionFactor);
-                array_push($fat,$ingredient->fat*0.2*$portionFactor);
+                array_push($energy,$ingredient->energy*0.2*$portionSize*$portions);
+                array_push($protein,$ingredient->protein*0.2*$portionSize*$portions);
+                array_push($carbohydrate,$ingredient->carbohydrate*0.2*$portionSize*$portions);
+                array_push($fat,$ingredient->fat*0.2*$portionSize*$portions);
+                array_push($amount,0.2*$portionSize*100*$portions);
             }
         }
-        $energy = array_sum($energy);
-        $protein = array_sum($protein);
-        $carbohydrate = array_sum($carbohydrate);
-        $fat = array_sum($fat);
+        $energy = round(array_sum($energy),1);
+        $protein = round(array_sum($protein),1);
+        $carbohydrate = round(array_sum($carbohydrate),1);
+        $fat = round(array_sum($fat),1);
+        $amount = array_sum($amount);
 
-        $pdf = Pdf::loadView('pdf',compact('ingredients','energy','protein','carbohydrate','fat'));
+        $pdf = Pdf::loadView('pdf',compact('ingredients','energy','protein','carbohydrate','fat','portions','amount'));
         return $pdf->download('Rezept.pdf');
-        return view('pdf',compact('ingredients','energy','protein','carbohydrate','fat')); // TODO: entfernen
+        return view('pdf',compact('ingredients','energy','protein','carbohydrate','fat','portions','amount')); // TODO: entfernen
     }
 }

@@ -16,14 +16,18 @@
         @csrf
         @if (isset($ingredients))
         <div>
-            <h5>Für 1 Portion:</h5>
-            <p><strong>Salatbasis: </strong><span class="amount">40g </span>{{$ingredients[0]->title}} <span class="energy"><i class="fa-solid fa-fire-flame-simple"></i> 55kcal</span></p>
-            <p><strong>Gemüse: </strong>{{$ingredients[1]->title}}</p> 
-            <p><strong>Kohlenhyderate: </strong>{{$ingredients[2]->title}}</p> 
-            <p><strong>Proteinquelle: </strong>{{$ingredients[3]->title}}</p>
-            <p><strong>Fette: </strong>{{$ingredients[4]->title}}</p>
-            <p><strong>Früchte: </strong>{{$ingredients[5]->title}}</p>
-            <p><strong>Topping: </strong>{{$ingredients[6]->title}}</p>
+            <div class="form-outline portions">
+                <label class="form-label portions-label" for="typeNumber">Portionen:</label>
+                <input type="number" id="typeNumber" class="form-control mx-auto portions-input" name="number" value="{{$portions}}" min="1"/>
+                <button class="btn btn-sm btn-outline-secondary my-auto" name="submit" value="portions">Ok</button>
+            </div>
+            <p><strong>Salatbasis: </strong><span class="amount">{{$amount*0.1}}g</span> {{$ingredients[0]->title}}</p>
+            <p><strong>Gemüse: </strong><span class="amount">{{$amount*0.2}}g</span> {{$ingredients[1]->title}}</p> 
+            <p><strong>Kohlenhyderate: </strong><span class="amount">{{$amount*0.2}}g</span> {{$ingredients[2]->title}}</p> 
+            <p><strong>Proteinquelle: </strong><span class="amount">{{$amount*0.2}}g</span> {{$ingredients[3]->title}}</p>
+            <p><strong>Fette: </strong><span class="amount">{{$amount*0.15}}g</span> {{$ingredients[4]->title}}</p>
+            <p><strong>Früchte: </strong><span class="amount">{{$amount*0.1}}g</span> {{$ingredients[5]->title}}</p>
+            <p><strong>Topping: </strong><span class="amount">{{$amount*0.05}}g</span> {{$ingredients[6]->title}}</p>
             <p>&nbsp</p>
             <p><strong>Energiegehalt: </strong>{{$energy}}kcal</p>
             <p><strong>Proteingehalt: </strong>{{$protein}}g</p>
@@ -35,7 +39,7 @@
             </div>
         </div>
         @endif
-        <button type="submit" id="recipeButton" name="form" class="btn btn-secondary">Ein Rezept generieren</button>
+        <button type="submit" id="recipeButton" name="submit" class="btn btn-secondary">Ein Rezept generieren</button>
     </form>
 </div>
 
