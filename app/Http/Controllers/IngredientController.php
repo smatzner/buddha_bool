@@ -27,6 +27,16 @@ class IngredientController extends Controller
         }
         else {
             $ingredients = Ingredient::sortable()->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->paginate(15);
+
+            // Add value 'count = 1' to categories with just one ingredient
+            foreach($ingredients as $ingredient){
+                $userId = auth()->user()->id;
+                $ingredientCount = Ingredient::where('category_id',$ingredient->category_id)->whereDoesntHave('lockedIngredients', function($query) use ($userId) { 
+                    $query->where('user_id',$userId);})->where('user_id',NULL)->orWhere('user_id',auth()->user()->id)->count();
+                if(($ingredientCount == 1)){
+                    $ingredient->count = 1;
+                }
+            }
         }
 
         if(!empty($_GET['sort'])){
@@ -131,7 +141,6 @@ class IngredientController extends Controller
      */
     public function update(Request $request, Ingredient $ingredient)
     {
-        dd($ingredient);
         $request->validate([
             'title' => 'required|min:2',
             'category_id' => 'required|exists:categories,id',
@@ -196,14 +205,20 @@ class IngredientController extends Controller
     public function destroy($id)
     {
         $ingredient = Ingredient::find($id);
-        $ingredientCount = Ingredient::where('category_id',$ingredient->category_id)->where('user_id',NULL)->count();
-    
-        // Warnung ausgeben, wenn Zutat mit Rezept verbunden
+        if(auth()->user()->is_admin){
+            $ingredientCount = Ingredient::where('category_id',$ingredient->category_id)->where('user_id',NULL)->count();
+        }
+        else{
+            $userId = auth()->user()->id;
+            $ingredientCount = Ingredient::where('category_id',$ingredient->category_id)->whereDoesntHave('lockedIngredients', function($query) use ($userId) { 
+            $query->where('user_id',$userId);})->where('user_id',NULL)->orWhere('user_id',auth()->user()->id)->count();
+        }
+        
         if(!$ingredient){
             $status = 404;
             $msg = 'Zutat nicht gefunden.';
         }
-        elseif($ingredientCount == 1 && !$ingredient->user_id){
+        elseif($ingredientCount == 1){
             $category = Category::select('id', 'title')->get();
             $status = 403;
             $msg = 'Es muss mindestens eine Zutat in der Kategorie \''.$category[$ingredient->category_id-1]->title.'\' vorhanden sein!';
