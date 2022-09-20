@@ -78,6 +78,7 @@ a:hover{
 .wrapper-settings{
     display: none;
     width: 500px;
+    text-align: left;
 }
 
 .amount{

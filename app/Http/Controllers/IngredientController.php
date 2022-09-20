@@ -17,7 +17,7 @@ class IngredientController extends Controller
     public function index(Request $request)
     {        
         if(Auth::user()->is_admin == 1){
-            $ingredients = Ingredient::sortable()->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->paginate(15);
+            $ingredients = Ingredient::sortable()->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->paginate(15);
             // Add value 'count = 1' to categories with just one ingredient
             foreach($ingredients as $ingredient){
                 if((Ingredient::where('category_id',$ingredient->category_id)->where('user_id',NULL)->count() == 1)){
@@ -26,7 +26,7 @@ class IngredientController extends Controller
             }
         }
         else {
-            $ingredients = Ingredient::sortable()->with('lockedIngredients')->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->paginate(15);
+            $ingredients = Ingredient::sortable()->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->paginate(15);
         }
 
         if(!empty($_GET['sort'])){
@@ -34,10 +34,8 @@ class IngredientController extends Controller
         }
         if(!empty($_GET['page'])){
             $request->session()->put('page','page='.$_GET['page']);
-            $page = $request->session()->get('page');
-            return view('ingredient.index', compact('ingredients','page'));
         }
-        else{
+        if(empty($_GET['page']) && empty($_GET['sort'])){
             $request->session()->forget('page');
             $request->session()->forget('sort');
         }
@@ -200,7 +198,6 @@ class IngredientController extends Controller
         $ingredientCount = Ingredient::where('category_id',$ingredient->category_id)->where('user_id',NULL)->count();
     
         // Warnung ausgeben, wenn Zutat mit Rezept verbunden
-
         if(!$ingredient){
             $status = 404;
             $msg = 'Zutat nicht gefunden.';
@@ -244,14 +241,16 @@ class IngredientController extends Controller
         $isLocked = $ingredient->lockedIngredients()->pluck('id');
 
         if(($ingredientCount - $lockedIngredientCount == 1) && !isset($isLocked[0])){
-            return redirect()->back()->with('error', 'Es muss mindestens eine Zutat in der Kategorie '.$category[$ingredient->category_id-1]->title.' verfügbar sein. Entsperren Sie zunächst eine andere Zutat derselben Kategorie oder fügen Sie eine neue Zutat mit dieser Kategorie hinzu.'); // FIXME: nicht schön
+            return redirect(url()->previous().'#top')->with('error', 'Es muss mindestens eine Zutat in der Kategorie '.$category[$ingredient->category_id-1]->title.' verfügbar sein. Entsperren Sie zunächst eine andere Zutat derselben Kategorie oder fügen Sie eine neue Zutat mit dieser Kategorie hinzu.'); // FIXME: nicht schön
         }
 
         $ingredient->lockedIngredients()->toggle($userId);
 
 
-        if($request->session()->get('page')){
-            return redirect()->route('ingredient.index',$request->session()->get('page'));
+        if($request->session()->get('sort') || $request->session()->get('page')){
+            $page = $request->session()->get('page');
+            $sort = $request->session()->get('sort');
+            return redirect()->route('ingredient.index',[$page,$sort]);
         }
 
         return redirect()->route('ingredient.index');

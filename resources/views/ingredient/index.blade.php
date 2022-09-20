@@ -12,7 +12,7 @@
 <div class="alert alert-success">{{ session('success') }}</div>
 @endif
 @if( session('error') )
-<div class="alert alert-danger">{{ session('error') }}</div>
+<div class="alert alert-danger" id="error">{{ session('error') }}</div>
 @endif
 
 User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehmen --}}
@@ -23,7 +23,7 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
   <thead>
     <tr>
       <th>@sortablelink('title','Name')</th>
-      <th>@sortablelink('category_id','Kategorie',['category' => 'title'])</th> {{-- FIXME: alphabetische Sortierung, nicht nach ID --}}
+      <th>@sortablelink('category.title','Kategorie')</th>
       <th class="text-center">@sortablelink('energy','Energie')</th>
       <th class="text-center">@sortablelink('protein','Proteine')</th>
       <th class="text-center">@sortablelink('carbohydrate','Kohlenhydrate')</th>
@@ -81,7 +81,8 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
 </table>
 
 <div class="myPagination">
-{{ $ingredients->links("pagination::bootstrap-4")}}
+{{-- {{ $ingredients->links("pagination::bootstrap-4")}} --}}
+{{$ingredients->appends(Request::except('page'))->links("pagination::bootstrap-4")}}
 </div>
 
 
