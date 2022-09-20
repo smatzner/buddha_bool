@@ -44,15 +44,15 @@
 
         <div class="wrapper-settings mx-auto">
             <div class="form-check form-switch">
-                <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="veg" name="veg" @if(isset($veg)) checked @endif>
+                <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="veg" name="veg" @if(!empty($veg)) checked @endif>
                 <label class="form-check-label mx-auto" for="veg">vegetarisch</label>
             </div>
             <div class="form-check form-switch">
-                <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="vgn" name="vgn" @if(isset($vgn)) checked @endif>
+                <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="vgn" name="vgn" @if(!empty($vgn)) checked @endif>
                 <label class="form-check-label mx-auto" for="vgn">vegan</label>
             </div>
             <div class="form-check form-switch">
-                <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="gf" name="gf" @if(isset($gf)) checked @endif>
+                <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="gf" name="gf" @if(!empty($gf)) checked @endif>
                 <label class="form-check-label mx-auto" for="gf">glutenfrei</label>
             </div>
         </div>

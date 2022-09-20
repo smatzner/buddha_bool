@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Index;
 use App\Models\Ingredient;
 use App\Models\Recipe;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Session\Session;
@@ -20,8 +21,20 @@ class IndexController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('index');
+    {   
+        $veg = '';
+        $vgn = '';
+        $gf = '';
+
+        if(auth()->user()){
+            $user = User::findOrFail(auth()->user()->id);
+
+            $user->veg ? $veg = 1 : $veg = NULL;
+            $user->vgn ? $vgn = 1 : $vgn = NULL;
+            $user->gf ? $gf = 1 : $gf = NULL;
+        }
+
+        return view('index',compact('veg','vgn','gf'));
     }
 
     // TODO: doc
@@ -29,10 +42,18 @@ class IndexController extends Controller
     {
         $ingredients = [];
         $categoryCount = Category::all()->count();
+        if(auth()->user()){
+            $user = User::findOrFail(auth()->user()->id);
+    
+            $user->veg ? $veg = 1 : $veg = NULL;
+            $user->vgn ? $vgn = 1 : $vgn = NULL;
+            $user->gf ? $gf = 1 : $gf = NULL;
+        }
 
-        !empty($request->veg) ? $veg = $request->has('veg') : $veg = NULL;
-        !empty($request->vgn) ? $vgn = $request->has('vgn') : $vgn = NULL;
-        !empty($request->gf) ? $gf = $request->has('gf') : $gf = NULL;
+        !empty($request->veg) ? $veg = 1 : $veg = NULL;
+        !empty($request->vgn) ? $vgn = 1 : $vgn = NULL;
+        !empty($request->gf) ? $gf = 1 : $gf = NULL;
+
 
         if(isset(auth()->user()->id)){
             $userId = auth()->user()->id;
@@ -73,7 +94,6 @@ class IndexController extends Controller
                 array_push($ingredients,$ingredient);
             }
         }
-
         // Check if there is a category with 0 ingredients
         if(in_array(NULL,$ingredients)){
             return redirect()->route('index')->with('error','Es ist ein Fehler aufgetreten, überprüfen Sie Ihre Zutatenliste!');
