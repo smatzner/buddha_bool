@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="center-content">
-    <h1 class="h1">The Buddha Bool</h1>
+    <h1>The Buddha Bool</h1>
     
 
     @if( session('error') )
@@ -42,21 +42,21 @@
         <button type="submit" id="recipeButton" name="submit" class="btn btn-secondary">Ein Rezept generieren</button>
 
 
-<div class="wrapper-settings mx-auto">
-        <div class="form-check form-switch">
-            <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="veg" name="veg" @if(isset($veg)) checked @endif>
-            <label class="form-check-label mx-auto" for="veg">vegetarisch</label>
-        </div>
-        <div class="form-check form-switch">
-            <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="vgn" name="vgn" @if(isset($vgn)) checked @endif>
-            <label class="form-check-label mx-auto" for="vgn">vegan</label>
-        </div>
-        <div class="form-check form-switch">
-            <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="gf" name="gf" value="1">
-            <label class="form-check-label mx-auto" for="gf">glutenfrei</label>
+        <div class="wrapper-settings mx-auto">
+            <div class="form-check form-switch">
+                <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="veg" name="veg" @if(isset($veg)) checked @endif>
+                <label class="form-check-label mx-auto" for="veg">vegetarisch</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="vgn" name="vgn" @if(isset($vgn)) checked @endif>
+                <label class="form-check-label mx-auto" for="vgn">vegan</label>
+            </div>
+            <div class="form-check form-switch">
+                <input class="form-check-input mx-auto me-2" type="checkbox" role="switch" id="gf" name="gf" @if(isset($gf)) checked @endif>
+                <label class="form-check-label mx-auto" for="gf">glutenfrei</label>
+            </div>
         </div>
     </form>
-</div>
 </div>
 <p class="center-content settings">Einstellungen</p>
 </div>

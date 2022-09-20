@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('recipes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->nullable();
             $table->boolean('is_bookmarked')->default(false);
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ class IngredientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {        
         if(Auth::user()->is_admin == 1){
             $ingredients = Ingredient::sortable()->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->paginate(15);
@@ -29,14 +29,19 @@ class IngredientController extends Controller
             $ingredients = Ingredient::sortable()->with('lockedIngredients')->with('category:id,title')->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->paginate(15);
         }
 
-        if(!empty($_SERVER['QUERY_STRING'])){
-            $queryString = $_SERVER['QUERY_STRING'];
-            return view('ingredient.index', compact('ingredients','queryString'));
+        if(!empty($_GET['sort'])){
+            $request->session()->put('sort','sort='.$_GET['sort'].'&direction='.$_GET['direction']);
+        }
+        if(!empty($_GET['page'])){
+            $request->session()->put('page','page='.$_GET['page']);
+            $page = $request->session()->get('page');
+            return view('ingredient.index', compact('ingredients','page'));
+        }
+        else{
+            $request->session()->forget('page');
+            $request->session()->forget('sort');
         }
 
-
-
-        // $_SERVER['QUERY_STRING'] -> wie bei lock()
         return view('ingredient.index', compact('ingredients'));
     }
 
@@ -243,13 +248,12 @@ class IngredientController extends Controller
         }
 
         $ingredient->lockedIngredients()->toggle($userId);
-        
-        if(stristr($_SERVER['HTTP_REFERER'],'sort')){
-            $_GET = stristr($_SERVER['HTTP_REFERER'],'sort');
-            return redirect()->route('ingredient.index',$_GET);
+
+
+        if($request->session()->get('page')){
+            return redirect()->route('ingredient.index',$request->session()->get('page'));
         }
 
-        // if(!empty($_SERVER['QUERY_STRING']))
         return redirect()->route('ingredient.index');
     }
 }

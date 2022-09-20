@@ -32,7 +32,6 @@ class Ingredient extends Model
     public $sortable = [
         'title',
         'category_id',
-        'category:id,title',
         'energy',
         'protein',
         'carbohydrate',

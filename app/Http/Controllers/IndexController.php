@@ -76,7 +76,7 @@ class IndexController extends Controller
 
         // Check if there is a category with 0 ingredients
         if(in_array(NULL,$ingredients)){
-            return redirect()->back()->with('error','Es ist ein Fehler aufgetreten, überprüfen Sie Ihre Zutatenliste!');
+            return redirect()->route('index')->with('error','Es ist ein Fehler aufgetreten, überprüfen Sie Ihre Zutatenliste!');
         }
 
         // Energy, Proteins, Carbohydrates, Fat

@@ -144,6 +144,14 @@ p.settings{
         display: none;
     }
 
+    .offcanvas{
+        display: none;
+    }
+
+    .offcanvas-backdrop{
+        display: none;
+    }
+
     .btn{
         display: none;
     }
@@ -157,6 +165,10 @@ p.settings{
         font-weight: 800;
     }
 
+    .wrapper-settings{
+        display: none;
+    }
+    
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -166,4 +178,5 @@ p.settings{
     input[type=number] {
         -moz-appearance: textfield;
     }
+
 }

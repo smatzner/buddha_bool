@@ -35,7 +35,8 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
   </thead>
   @foreach ($ingredients as $ingredient)
   <tr @if (auth()->user()->id == $ingredient->user_id) class="table-warning"  @endif
-      @if (lockedIngredients($ingredient,$ingredient->id,auth()->user()->id)) class="table-light" @endif>
+      @if (lockedIngredients($ingredient,$ingredient->id,auth()->user()->id)) class="table-light" @endif
+      id="{{$ingredient->id}}">
     <td scope="row">{{$ingredient->title}}</td> 
     <td>{{$ingredient->category->title}}</td>
     <td class="text-center">{{$ingredient->energy}}kcal</td>
@@ -61,13 +62,13 @@ User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehm
     @if ((!auth()->user()->is_admin) && (!$ingredient->user_id))
     <td colspan="2">
       @if(lockedIngredients($ingredient,$ingredient->id,auth()->user()->id))
-      <form action="{{route('ingredient.lock',$ingredient->id)}}" method="POST">
+      <form action="{{route('ingredient.lock',[$ingredient->id,'#'.$ingredient->id])}}" method="POST">
         @method('PUT')
         @csrf
         <button type="submit" class="btn btn-outline-danger">Entsperren</button>
       </form>
       @else
-      <form action="{{route('ingredient.lock',$ingredient->id)}}" method="POST">
+      <form action="{{route('ingredient.lock',[$ingredient->id,'#'.$ingredient->id])}}" method="POST">
         @method('PUT')
         @csrf
         <button type="submit" class="btn btn-outline-danger">Sperren</button>
