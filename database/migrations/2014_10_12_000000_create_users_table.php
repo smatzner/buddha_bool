@@ -23,7 +23,9 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->boolean('is_admin')->default(false);
-        
+            $table->boolean('veg')->default(false);
+            $table->boolean('vgn')->default(false);
+            $table->boolean('gf')->default(false);
         });
     }
 

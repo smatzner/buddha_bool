@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use App\Models\Ingredient;
 use App\Models\Recipe;
@@ -46,6 +47,9 @@ Route::middleware('auth')->group(function () {
     // Recipes
     Route::put('/recipe/bookmark/{recipe}',[RecipeController::class,'bookmark'])->name('recipe.bookmark');
     Route::resource('/recipe',RecipeController::class);
+
+    //Settings
+    Route::resource('/settings',SettingsController::class);
 });
 
 Auth::routes();

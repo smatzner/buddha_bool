@@ -131,6 +131,7 @@ class IngredientController extends Controller
      */
     public function update(Request $request, Ingredient $ingredient)
     {
+        dd($ingredient);
         $request->validate([
             'title' => 'required|min:2',
             'category_id' => 'required|exists:categories,id',

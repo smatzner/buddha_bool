@@ -22,8 +22,11 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'is_admin',
+        'veg',
+        'vgn',
+        'gf',
     ];
-
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,6 +45,9 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'vgn' => 'boolean',
+        'veg' => 'boolean',
+        'gf' => 'boolean'
     ];
 
     public function category()

@@ -17,8 +17,6 @@
 
 User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehmen --}}
 
-{{-- TODO: Filter hinzufügen --}}
-
 <table class="table table-hover table-settings">
   <thead>
     <tr>

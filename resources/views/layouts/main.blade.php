@@ -49,6 +49,12 @@
             <a class="nav-link" aria-current="page" href="{{route('recipe.index')}}">Rezepte</a>
           </li>
           @endauth
+          {{-- Settings --}}
+          @auth
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{{route('settings.index')}}">Einstellungen</a>
+          </li>
+          @endauth
           {{-- Login --}}
           <li class="nav-item ms-lg-auto login-button">
             <a class="nav-link" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" role="button" href="#offcanvasExample">
