@@ -6,7 +6,12 @@
 
 <h1>Zutaten</h1>
 
-<p>Hier befindet sich dann ein Text der kurz erklärt, was in dieser Ansicht gemacht werden kann.</p>
+@can('is_admin')
+<p class="description">In der Zutaten-Übersicht haben Sie die Möglichkeit neue Zutaten hinzufügen, zu bearbeiten oder zu löschen. Zudem besteht die Möglichkeit eine Zutat als persönliche Zutat abzuspeichern, diese wird dann nicht mehr berücksichtigt, wenn andere User den Generator verwenden</p>
+@endcan
+@can('is_user')
+<p class="description">In der Zutaten-Übersicht haben Sie die Möglichkeit Zutaten zu sperren, die nicht mehr vom Generator berücksichtigt werden, sowie neue persönliche hinzuzufügen, zu bearbeiten oder zu löschen.</p>
+@endcan
 
 @if( session('success') )
 <div class="alert alert-success">{{ session('success') }}</div>

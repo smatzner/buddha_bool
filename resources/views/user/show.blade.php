@@ -4,6 +4,9 @@
 
 @section('content')
 
+<h1>{{$user->first_name}} {{$user->last_name}}</h1>
+<div class="button"><a href="{{route('user.index')}}" class="btn btn-outline-secondary">Alle Benutzer</a></div>
+
 <div >
     <label for="first_name">Vorname</label>
     <input class="form-control w-25" type="text" value="{{$user->first_name}}" id="first_name" disabled>

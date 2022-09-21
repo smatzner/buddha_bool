@@ -30,9 +30,7 @@ Route::get('/pdf',[IndexController::class,'pdf'])->name('index.pdf');
 Route::resource('/', IndexController::class);
 
 // About
-Route::get('/about', function () {
-    return view('about.index');
-});
+Route::view('/about','about.index')->name('about');
 
 Route::middleware('auth')->group(function () {
     // Users

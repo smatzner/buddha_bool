@@ -6,7 +6,7 @@
 
 <h1>Rezepte</h1>
 
-<p>Hier befindet sich dann ein Text der kurz erklärt, was in dieser Ansicht gemacht werden kann.</p>
+<p>In der Rezepte-Übersicht können Sie zuvor generierte Rezepte speichern, bearbeiten oder löschen. Es werden stets Ihre fünf zuletzt generierten Rezepte, sowie alle mit 'Speichern' markierte Rezepte angezeigt.</p>
 
 @if( session('success') )
 <div class="alert alert-success">{{ session('success') }}</div>
@@ -31,13 +31,7 @@
   @foreach ($recipes as $recipe)
       <tr @if ($recipe->is_bookmarked) class="table-warning" @endif>
         @for ($i = 0; $i < $categoriesCount; $i++)
-            <td class="text-center">
-              @if (isset($recipe->ingredients[$i]->category_id))
-                  {{$recipe->ingredients[$i]->title}}
-              @else
-                <strong>keine Zutat</strong>
-              @endif 
-            </td>
+            <td class="text-center">{{$recipe->ingredients[$i]->title}}</td>
         @endfor
         <td class="text-center">
           <form action="{{route('recipe.bookmark',$recipe->id)}}" method="POST">

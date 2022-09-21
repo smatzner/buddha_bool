@@ -20,6 +20,10 @@ a:hover{
     margin: 20px 0;
 }
 
+.description{
+    max-width: 900px;
+}
+
 /* --- Navbar / Offcanvas --- */
 
 .nav-link{
@@ -107,6 +111,7 @@ p.diet-settings{
 .show-block{
     display: block;
 }
+
 
 /* --- Print View --- */
 @media print{
