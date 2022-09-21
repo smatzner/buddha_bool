@@ -16,9 +16,9 @@ class IngredientController extends Controller
      */
     public function index(Request $request)
     {        
+        // Add value 'count = 1' to categories with just one ingredient
         if(Auth::user()->is_admin == 1){
             $ingredients = Ingredient::sortable()->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->paginate(15);
-            // Add value 'count = 1' to categories with just one ingredient
             foreach($ingredients as $ingredient){
                 if((Ingredient::where('category_id',$ingredient->category_id)->where('user_id',NULL)->count() == 1)){
                     $ingredient->count = 1;
@@ -27,12 +27,15 @@ class IngredientController extends Controller
         }
         else {
             $ingredients = Ingredient::sortable()->where('user_id',null)->orWhere('user_id',Auth::user()->id)->orderBy('user_id','desc')->paginate(15);
-
-            // Add value 'count = 1' to categories with just one ingredient
             foreach($ingredients as $ingredient){
                 $userId = auth()->user()->id;
-                $ingredientCount = Ingredient::where('category_id',$ingredient->category_id)->whereDoesntHave('lockedIngredients', function($query) use ($userId) { 
-                    $query->where('user_id',$userId);})->where('user_id',NULL)->orWhere('user_id',auth()->user()->id)->count();
+                $ingredientCount = Ingredient::where('category_id',$ingredient->category_id)
+                                             ->whereDoesntHave('lockedIngredients', function($query) use ($userId) { 
+                                                $query->where('user_id',$userId);
+                                             })
+                                             ->where('user_id',NULL)
+                                             ->orWhere('user_id',auth()->user()->id)
+                                             ->count();
                 if(($ingredientCount == 1)){
                     $ingredient->count = 1;
                 }
@@ -97,19 +100,6 @@ class IngredientController extends Controller
         $ingredient->save();
 
         return redirect()->route('ingredient.index')->with('success', 'Die Zutat '.$ingredient->title.' wurde erfolgreich erstellt.');
-    }
-
-    
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ingredient $ingredient)
-    {
-        //
     }
 
     /**
@@ -199,7 +189,7 @@ class IngredientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ingredient  $ingredient // TODO: doc korrigieren
+     * @param  \App\Models\Ingredient  $ingredient->id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -245,7 +235,14 @@ class IngredientController extends Controller
         return redirect()->route('ingredient.index')->with('success', $msg);
     }
 
-    // TODO: doc
+    /**
+     * Add specified ingredient in ingredient_user table 
+     *
+     * @param   \App\Models\Ingredient    $ingredient
+     * @param   \Illuminate\Http\Request  $request
+     *
+     * @return  \Illuminate\Http\Response
+     */
     public function lock(Ingredient $ingredient,Request $request){
         $category = Category::select('id', 'title')->get();
         $userId = auth()->user()->id;

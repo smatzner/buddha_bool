@@ -37,7 +37,13 @@ class IndexController extends Controller
         return view('index',compact('veg','vgn','gf'));
     }
 
-    // TODO: doc
+    /**
+     * Generate a new recipe and save it in recipes table
+     *
+     * @param   \Illuminate\Http\Request  $request
+     *
+     * @return  \Illuminate\Http\Response
+     */
     public function generate(Request $request)
     {
         $ingredients = [];
@@ -197,39 +203,6 @@ class IndexController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Index  $index
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Index $index)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Index  $index
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Index $index)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -242,17 +215,12 @@ class IndexController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Export generated recipe as .pdf-file
      *
-     * @param  \App\Models\Index  $index
-     * @return \Illuminate\Http\Response
+     * @param   \Illuminate\Http\Request  $request
+     *
+     * @return  \Illuminate\Http\Response
      */
-    public function destroy(Index $index)
-    {
-        //
-    }
-
-    // TODO: doc
     public function pdf(Request $request){
         $ingredients = Recipe::latest('created_at')->first()->ingredients()->orderBy('category_id')->get();
 
