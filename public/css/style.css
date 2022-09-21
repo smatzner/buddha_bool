@@ -1,5 +1,5 @@
+/* --- General --- */
 *{
-    /* box-sizing: border-box; */
     font-family: monospace;
 }
 
@@ -16,36 +16,40 @@ a:hover{
     padding: 20px 20px 20px 40px;
 }
 
-.table-settings{
-    max-width: 900px;
-}
-
-.form{
-    max-width: 900px;
-}
-
 .button{
     margin: 20px 0;
 }
+
+/* --- Navbar / Offcanvas --- */
 
 .nav-link{
     color:rgba(0,0,0,.9);
 }
 
-.canvas-menu{
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 300px;
-    height: 100%;
-    transform:  translateX(300px);
-    transition: all 1s;
-    z-index: 9999;
-    background-color: darkgray
+.offcanvas{
+    max-width: 300px;
 }
 
-.canvas-menu.active{
-    transform: none;
+/* --- Tables --- */
+.table-settings{
+    max-width: 900px;
+}
+
+.table-light{
+    color: rgb(150, 150, 150);
+}
+
+/* --- Forms --- */
+.form{
+    max-width: 900px;
+}
+
+.show-block{
+    display: block;
+}
+/* --- Index --- */
+.center-content{
+    text-align: center;
 }
 
 .portions-input{
@@ -57,22 +61,17 @@ a:hover{
     font-size: 1.1rem;
 }
 
-#recipeButton{
+.amount{
+    font-size: 0.9rem;
+}
+
+#recipe-button{
     margin: 10px auto;
 }
 
-.center-content{
-    text-align: center;
-}
-
-.wrapper-recipe{
-    display: none;
-    position: relative;
-    justify-content: center;
-}
-
-.wrapper-recipe p{
-    text-align: left;
+p.settings{
+    font-size: 10px;
+    color: rgba(0,0,0,.6);
 }
 
 .wrapper-settings{
@@ -81,57 +80,12 @@ a:hover{
     text-align: left;
 }
 
-.amount{
-    font-size: 0.9rem;
-}
-
 .wrapper-settings .form-check.form-switch{
     width: 200px;
     margin: 0 auto;
 }
 
-
-p.settings{
-    font-size: 10px;
-    color: rgba(0,0,0,.6);
-}
-
-.show-grid{
-    display: grid;
-}
-
-.show-block{
-    display: block;
-}
-
-.user-settings{
-    margin: 20px;
-}
-
-.offcanvas{
-    max-width: 300px;
-}
-
-.table-light{
-    color: rgb(150, 150, 150);
-}
-
-.page-link{
-    color: black;
-}
-
-.page-link:hover{
-    color: rgb(150, 150, 150);
-}
-
-.page-link:focus{
-    box-shadow: 0 0 0 0.2rem rgb(150 150 150 / 50%);
-}
-
-.page-item.active .page-link{
-    background-color: rgb(150, 150, 150);
-    border-color: rgb(150, 150, 150);
-}
+/* --- Print View --- */
 @media print{
     *{
         font-size: 1.2rem;

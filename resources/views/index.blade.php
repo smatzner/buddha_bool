@@ -39,7 +39,7 @@
             </div>
         </div>
         @endif
-        <button type="submit" id="recipeButton" name="submit" class="btn btn-secondary">Ein Rezept generieren</button>
+        <button type="submit" id="recipe-button" name="submit" class="btn btn-secondary">Ein Rezept generieren</button>
 
 
         <div class="wrapper-settings mx-auto">
@@ -62,10 +62,6 @@
 </div>
 
   <script>
-      function myClick(){
-          document.querySelector('.wrapper-recipe').classList.toggle('show-grid');
-      }
-
       document.querySelector('.settings').addEventListener('click', function(){
           document.querySelector('.wrapper-settings').classList.toggle('show-block');
       });
