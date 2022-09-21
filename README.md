@@ -3,7 +3,7 @@
 ## Git Clone
 
 - git clone <Pfad>
-- cd in laravel Ordner wechseln
+- cd in buddha_bool Ordner wechseln
 - composer install ausführen
 - .env.example Datei kopieren und umbenennen in .env
 - Datenbank (buddha_bool) mittels PhpMyAdmin anlegen
