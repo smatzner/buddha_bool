@@ -39,6 +39,23 @@ a:hover{
     color: rgb(150, 150, 150);
 }
 
+.page-link{
+    color: black;
+}
+
+.page-link:hover{
+    color: rgb(150, 150, 150);
+}
+
+.page-link:focus{
+    box-shadow: 0 0 0 0.2rem rgb(150 150 150 / 50%);
+}
+
+.page-item.active .page-link{
+    background-color: rgb(150, 150, 150);
+    border-color: rgb(150, 150, 150);
+}
+
 /* --- Forms --- */
 .form{
     max-width: 900px;
