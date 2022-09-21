@@ -22,7 +22,11 @@ class RecipeController extends Controller
         }])->where('user_id',Auth::user()->id)->orderBy('is_bookmarked','desc')->orderBy('created_at')->get();
         $categoriesCount = Category::get()->count();
 
-        // Rezept rauslöschen, wenn eine Zutat fehlt
+        foreach($recipes as $recipe){
+            if($recipe->ingredients()->count() < $categoriesCount){
+                $recipe->delete();
+            }
+        }
 
         return view('recipe.index',compact('recipes','categoriesCount'));
     }
@@ -39,9 +43,6 @@ class RecipeController extends Controller
         $ingredients = Ingredient::select('id','category_id','title')->get();
         $categories = Category::select('id','title')->get();
         $categoriesCount = Category::get()->count();
-
-        // dd($recipe[0]);
-
 
         return view('recipe.edit',compact('recipe','recipeIngredients','ingredients','categories','categoriesCount'));
     }
@@ -110,7 +111,14 @@ class RecipeController extends Controller
         return redirect()->route('recipe.index')->with('success', $msg);
     }
 
-    // TODO: doc
+    /**
+     * Toggle is_bookmarked in recipe table
+     *
+     *  @param  \Illuminate\Http\Request    $request
+     *  @param  \App\Models\Recipe          $recipe
+     *  
+     *  @return \Illuminate\Http\Response
+     */
     public function bookmark(Request $request, Recipe $recipe){
         $recipe->is_bookmarked ? $recipe->is_bookmarked = false : $recipe->is_bookmarked = true;
         $recipe->save();
