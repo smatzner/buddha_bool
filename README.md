@@ -12,3 +12,7 @@
 - php artisan migrate ausführen
 - php artisan db:seed ausführen
 - php artisan serve
+
+gespeicherte Login-Daten für Admin:
+    E-Mail: admin@gmx.at
+    Passwort: 12345678
