@@ -56,5 +56,15 @@
     
 })(jQuery)
 
-const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+/**
+ * Add popover to elements with [data-bs-toggle="popover"]
+ */
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]');
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
+
+/**
+ * Toggle 'display:show' for elements with selected class on click.
+ */
+document.querySelector('.diet-settings').addEventListener('click', function(){
+    document.querySelector('.wrapper-settings').classList.toggle('show-block');
+});

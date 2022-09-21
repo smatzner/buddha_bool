@@ -15,8 +15,6 @@
 <div class="alert alert-danger">{{ session('error') }}</div>
 @endif
 
-User_ID: {{auth()->user()->id}} {{-- TODO: Info nur für Dev -> später rausnehmen --}}
-
 <table class="table table-hover table-settings">
   <thead>
     <tr>

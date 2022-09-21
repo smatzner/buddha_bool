@@ -44,8 +44,6 @@
             </div>
 
             <button type="submit" class="btn btn-dark">Speichern</button>
-            {{-- TODO: Passworteingabe bei Admin-Änderung --}}
-            {{-- TODO: Modal Fenster um Änderung zu bestätigen - notwendig? --}}
         </form>
     </div>
 

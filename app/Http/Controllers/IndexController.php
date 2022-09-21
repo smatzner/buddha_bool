@@ -306,6 +306,5 @@ class IndexController extends Controller
 
         $pdf = Pdf::loadView('pdf',compact('ingredients','energy','protein','carbohydrate','fat','portions','amount'));
         return $pdf->download('Rezept.pdf');
-        return view('pdf',compact('ingredients','energy','protein','carbohydrate','fat','portions','amount')); // TODO: entfernen
     }
 }

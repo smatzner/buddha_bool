@@ -61,7 +61,7 @@ class RecipeController extends Controller
 
         for ($i=0; $i < $categoriesCount; $i++) { 
             $request->validate([
-                ''.$categories[$i]->title.'' => 'required|exists:ingredients,id' // TODO: Mit Kategorie validieren
+                ''.$categories[$i]->title.'' => 'required|exists:ingredients,id'
             ]);  
         }
 

@@ -22,7 +22,7 @@
                 <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{old('title',$ingredient->title)}}" required>
             </div>
             @error('title')
-                <div class="invalid-feedback show-block">{{$message}}</div> {{-- TODO: Warum "display: none" bei invalid-feedback?  --}}
+                <div class="invalid-feedback show-block">{{$message}}</div>
             @enderror
             {{-- Category --}}
             <div class="form-group mb-2">

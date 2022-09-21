@@ -58,14 +58,7 @@
         </div>
     </form>
 </div>
-<p class="center-content settings">Einstellungen</p>
+<p class="center-content diet-settings">Einstellungen</p>
 </div>
-
-  <script>
-      document.querySelector('.settings').addEventListener('click', function(){
-          document.querySelector('.wrapper-settings').classList.toggle('show-block');
-      });
-
-  </script>
 
 @endsection

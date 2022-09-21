@@ -257,7 +257,7 @@ class IngredientController extends Controller
         $isLocked = $ingredient->lockedIngredients()->pluck('id');
 
         if(($ingredientCount - $lockedIngredientCount == 1) && !isset($isLocked[0])){
-            return redirect(url()->previous().'#top')->with('error', 'Es muss mindestens eine Zutat in der Kategorie '.$category[$ingredient->category_id-1]->title.' verfügbar sein. Entsperren Sie zunächst eine andere Zutat derselben Kategorie oder fügen Sie eine neue Zutat mit dieser Kategorie hinzu.'); // FIXME: nicht schön
+            return redirect(url()->previous().'#top')->with('error', 'Es muss mindestens eine Zutat in der Kategorie '.$category[$ingredient->category_id-1]->title.' verfügbar sein. Entsperren Sie zunächst eine andere Zutat derselben Kategorie oder fügen Sie eine neue Zutat mit dieser Kategorie hinzu.');
         }
 
         $ingredient->lockedIngredients()->toggle($userId);

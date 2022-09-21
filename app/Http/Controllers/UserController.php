@@ -95,7 +95,7 @@ class UserController extends Controller
             $msg = 'Admin Benutzer können nicht gelöscht werden';
         }
         else{
-            // $user->delete(); // TODO: aktivieren
+            $user->delete();
             $status = 200;
             $msg = 'Benutzer '.$user->email.' wurde erfolgreich gelöscht';
         }
