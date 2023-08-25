@@ -13,7 +13,7 @@ a:hover{
 }
 
 #wrapper{
-    padding: 20px 20px 20px 40px;
+    padding: 20px 20px 20px 40px; 
 }
 
 .button{
@@ -139,7 +139,7 @@ p.diet-settings{
         display: none;
     }
 
-    .settings{
+    .wrapper-settings{
         display: none;
     }
 
@@ -149,6 +149,10 @@ p.diet-settings{
     }
 
     .wrapper-settings{
+        display: none;
+    }
+
+    .diet-settings{
         display: none;
     }
     
